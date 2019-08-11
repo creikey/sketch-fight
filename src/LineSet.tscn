@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://LineSet.gd" type="Script" id=1]
+
+[node name="LineSet" type="Node2D"]
+script = ExtResource( 1 )
+fill_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+outline_color = Color( 0.431373, 0.431373, 0.431373, 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+show_behind_parent = true
