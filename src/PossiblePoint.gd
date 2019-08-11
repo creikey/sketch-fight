@@ -12,9 +12,11 @@ func _ready():
 #func _process(delta):
 #	pass
 
+func _on_Area2D_area_entered(area):
+	if area.is_in_group("mouse_puck"):
+		$AnimationPlayer.play("to_being_hovered")
 
-func _on_Area2D_mouse_entered():
-	$AnimationPlayer.play("to_being_hovered")
 
-func _on_Area2D_mouse_exited():
-	$AnimationPlayer.play("away_from_hovered")
+func _on_Area2D_area_exited(area):
+	if area.is_in_group("mouse_puck"):
+		$AnimationPlayer.play("away_from_hovered")

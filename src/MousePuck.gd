@@ -9,9 +9,12 @@ var out_of_editing_pad: bool = false setget set_out_of_editing_pad
 
 func _ready():
 	self.size = size
+	self.out_of_editing_pad = true
 
 func _process(delta):
 	rect_global_position = get_global_mouse_position()
+	$MirroredArea.global_position = get_mirrored_pos(rect_global_position)
+	print(get_mirrored_pos(rect_global_position) - rect_global_position)
 	update()
 
 func _draw():

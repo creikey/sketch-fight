@@ -89,9 +89,18 @@ margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 4 )
 
-[node name="Area2D" type="Area2D" parent="PhysicalUI/MousePuck"]
+[node name="Area2D" type="Area2D" parent="PhysicalUI/MousePuck" groups=[
+"mouse_puck",
+]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PhysicalUI/MousePuck/Area2D"]
+shape = SubResource( 3 )
+
+[node name="MirroredArea" type="Area2D" parent="PhysicalUI/MousePuck" groups=[
+"mouse_puck",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PhysicalUI/MousePuck/MirroredArea"]
 shape = SubResource( 3 )
 
 [node name="EditingPad" type="Area2D" parent="."]
@@ -120,3 +129,5 @@ region_rect = Rect2( 0, 62.6397, 51, 1080 )
 [node name="PossiblePoints" type="Node2D" parent="."]
 [connection signal="area_entered" from="PhysicalUI/MousePuck/Area2D" to="PhysicalUI/MousePuck" method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="PhysicalUI/MousePuck/Area2D" to="PhysicalUI/MousePuck" method="_on_Area2D_area_exited"]
+[connection signal="area_entered" from="PhysicalUI/MousePuck/MirroredArea" to="PhysicalUI/MousePuck" method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="PhysicalUI/MousePuck/MirroredArea" to="PhysicalUI/MousePuck" method="_on_Area2D_area_exited"]
