@@ -16,7 +16,7 @@ func _process(delta):
 
 func _draw():
 	draw_circle(Vector2(), size, color)
-	print(rect_global_position)
+#	print(rect_global_position)
 	draw_circle(get_mirrored_pos(rect_global_position) - rect_global_position, size, color)
 
 

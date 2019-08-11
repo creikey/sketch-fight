@@ -7,7 +7,8 @@ var cur_sketch: Sketch = null
 var cur_layer: int = 0
 var cur_lineset: LineSet = null
 
-var possible_points: Array = []
+var left_possible_points: Array = []
+var right_possible_points: Array = []
 
 onready var ui = get_node("UI")
 
@@ -37,22 +38,25 @@ func _input(event):
 		if $UI/MousePuck.out_of_editing_pad:
 			return
 		ensure_lineset()
-		add_point(ui.get_node("MousePuck").rect_global_position)
-		add_point(MousePuck.get_mirrored_pos(ui.get_node("MousePuck").rect_global_position))
-#		cur_lineset.points.append(ui.get_node("MousePuck").rect_global_position)
-#		cur_lineset.regenerate_polygon()
-#	elif event.is_action_pressed("ui_new_mirrored_point"):
-#		if $UI/MousePuck.out_of_editing_pad:
-#			return
-#		ensure_lineset()
-#		cur_lineset.points.append(MousePuck.get_mirrored_pos(ui.get_node("MousePuck").rect_global_position))
-#		cur_lineset.regenerate_polygon()
+		right_possible_points.append(add_point(ui.get_node("MousePuck").rect_global_position).global_position)
+		left_possible_points.append(add_point(MousePuck.get_mirrored_pos(ui.get_node("MousePuck").rect_global_position)).global_position)
+		cur_lineset.points = get_point_array()
+		cur_lineset.regenerate_polygon()
+
+func get_point_array():
+	left_possible_points.sort_custom(self, "_sort_point")
+	right_possible_points.sort_custom(self, "_sort_point")
+	right_possible_points.invert()
+	return left_possible_points + right_possible_points
+
+func _sort_point(point_a: Vector2, point_b: Vector2):
+	return point_a.y < point_b.y
 
 func add_point(new_position: Vector2):
 	var cur_possible_point = possible_point_pack.instance()
-	possible_points.append(cur_possible_point)
 	$PossiblePoints.add_child(cur_possible_point)
 	cur_possible_point.global_position = new_position
+	return cur_possible_point
 
 func write_layer():
 	cur_sketch.insert_lineset(cur_lineset, cur_layer)

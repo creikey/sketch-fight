@@ -80,7 +80,6 @@ line_set_pack = ExtResource( 2 )
 possible_point_pack = ExtResource( 3 )
 
 [node name="UI" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
 anims/into_editing_pad = SubResource( 4 )
@@ -97,7 +96,6 @@ script = ExtResource( 4 )
 shape = SubResource( 1 )
 
 [node name="EditingPad" type="Area2D" parent="."]
-editor/display_folded = true
 position = Vector2( 960, 540 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EditingPad"]
@@ -108,7 +106,7 @@ shape = SubResource( 2 )
 modulate = Color( 0.690196, 0.690196, 0.690196, 0.160784 )
 texture = ExtResource( 5 )
 region_enabled = true
-region_rect = Rect2( 219.412, 219.412, 1000, 1000 )
+region_rect = Rect2( 73.4059, 73.4059, 1000, 1000 )
 region_filter_clip = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="EditingPad"]
@@ -118,7 +116,7 @@ anims/grid-scrolling = SubResource( 3 )
 [node name="MirrorSprite" type="Sprite" parent="EditingPad"]
 texture = ExtResource( 6 )
 region_enabled = true
-region_rect = Rect2( 0, 187.232, 51, 1080 )
+region_rect = Rect2( 0, 62.6397, 51, 1080 )
 
 [node name="PossiblePoints" type="Node2D" parent="."]
 [connection signal="area_entered" from="UI/MousePuck/Area2D" to="UI/MousePuck" method="_on_Area2D_area_entered"]
