@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://SketchEditor.gd" type="Script" id=1]
 [ext_resource path="res://LineSet.tscn" type="PackedScene" id=2]
-[ext_resource path="res://MousePuck.gd" type="Script" id=3]
-[ext_resource path="res://editing-lines.svg" type="Texture" id=4]
-[ext_resource path="res://mirror-line.svg" type="Texture" id=5]
+[ext_resource path="res://PossiblePoint.tscn" type="PackedScene" id=3]
+[ext_resource path="res://MousePuck.gd" type="Script" id=4]
+[ext_resource path="res://editing-lines.svg" type="Texture" id=5]
+[ext_resource path="res://mirror-line.svg" type="Texture" id=6]
 
 [sub_resource type="Animation" id=4]
 resource_name = "into_editing_pad"
@@ -76,6 +77,7 @@ tracks/1/keys = {
 [node name="SketchEditor" type="Node2D"]
 script = ExtResource( 1 )
 line_set_pack = ExtResource( 2 )
+possible_point_pack = ExtResource( 3 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 editor/display_folded = true
@@ -87,7 +89,7 @@ anims/out_of_editing_pad = SubResource( 5 )
 [node name="MousePuck" type="Control" parent="UI"]
 margin_right = 40.0
 margin_bottom = 40.0
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
 [node name="Area2D" type="Area2D" parent="UI/MousePuck"]
 
@@ -95,6 +97,7 @@ script = ExtResource( 3 )
 shape = SubResource( 1 )
 
 [node name="EditingPad" type="Area2D" parent="."]
+editor/display_folded = true
 position = Vector2( 960, 540 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EditingPad"]
@@ -103,9 +106,9 @@ shape = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="EditingPad"]
 modulate = Color( 0.690196, 0.690196, 0.690196, 0.160784 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 region_enabled = true
-region_rect = Rect2( 55.3251, 55.3251, 1000, 1000 )
+region_rect = Rect2( 219.412, 219.412, 1000, 1000 )
 region_filter_clip = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="EditingPad"]
@@ -113,8 +116,10 @@ autoplay = "grid-scrolling"
 anims/grid-scrolling = SubResource( 3 )
 
 [node name="MirrorSprite" type="Sprite" parent="EditingPad"]
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 region_enabled = true
-region_rect = Rect2( 0, 47.2107, 51, 1080 )
+region_rect = Rect2( 0, 187.232, 51, 1080 )
+
+[node name="PossiblePoints" type="Node2D" parent="."]
 [connection signal="area_entered" from="UI/MousePuck/Area2D" to="UI/MousePuck" method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="UI/MousePuck/Area2D" to="UI/MousePuck" method="_on_Area2D_area_exited"]
