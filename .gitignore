@@ -1,3 +1,6 @@
+# exported games
+build/
+
 # vscode files
 .vscode/
 

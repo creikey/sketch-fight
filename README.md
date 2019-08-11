@@ -11,6 +11,8 @@ The script `build.py` uses the following environment variables
 `GODOT_HEADLESS_CMD` - path to godot headless binary command
 `BUTLER_CMD` - path to butler command, for exporting to itch
 
+do not put a period in the game name, as it screws up inserting "exe" on windows export
+
 ## build script conventions
 
  - lower case version of all caps constant is real updated value from environment
