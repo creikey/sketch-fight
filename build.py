@@ -14,10 +14,6 @@ BUILD_DIR = "build"
 SRC_DIR = "src"
 EDITOR_SETTINGS_PATH = "~/.config/godot/editor_settings-3.tres"
 PLATFORMS = ["windows", "mac", "linux"]  # must corrispond to platform export in godot
-ZIP_CMD = "zip"
-UNZIP_CMD = "unzip"
-RM_CMD = "rm"
-PWD_CMD = "pwd"
 GODOT_HEADLESS_CMD = "godot-headless"
 BUTLER_CMD = "butler"
 
@@ -73,17 +69,9 @@ def main():
     editor_settings_path = os.path.expanduser(
         os.getenv("EDITOR_SETTINGS_PATH", EDITOR_SETTINGS_PATH)
     )  # checks user env for path
-    zip_cmd = os.getenv("ZIP_CMD", ZIP_CMD)
-    unzip_cmd = os.getenv("UNZIP_CMD", UNZIP_CMD)
-    rm_cmd = os.getenv("RM_CMD", RM_CMD)
-    pwd_cmd = os.getenv("PWD_CMD", PWD_CMD)
     godot_headless_cmd = os.getenv("GODOT_HEADLESS_CMD", GODOT_HEADLESS_CMD)
     butler_cmd = os.getenv("BUTLER_CMD", BUTLER_CMD)
 
-    check_for_command(zip_cmd)
-    check_for_command(unzip_cmd)
-    check_for_command(rm_cmd)
-    check_for_command(pwd_cmd)
     check_for_command(godot_headless_cmd)
     check_for_command(butler_cmd)
     check_for_file_or_directory(editor_settings_path)
