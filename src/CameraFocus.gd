@@ -17,6 +17,10 @@ func _input(event):
 		if Input.is_action_pressed("ui_zoom_mod"):
 			target_zoom += zoom_amount
 			target_zoom = clamp(target_zoom, 0.1, 10.0)
+	elif event.is_action_pressed("ui_pan"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	elif event.is_action_released("ui_pan"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _physics_process(delta):
 	$'../SketchEditor'.camera_transform = get_viewport().canvas_transform

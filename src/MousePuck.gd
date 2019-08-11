@@ -11,7 +11,7 @@ func _ready():
 	self.size = size
 
 func _process(delta):
-	rect_global_position = get_viewport().get_mouse_position()
+	rect_global_position = get_global_mouse_position()
 	update()
 
 func _draw():
