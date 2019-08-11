@@ -129,5 +129,3 @@ region_rect = Rect2( 0, 62.6397, 51, 1080 )
 [node name="PossiblePoints" type="Node2D" parent="."]
 [connection signal="area_entered" from="PhysicalUI/MousePuck/Area2D" to="PhysicalUI/MousePuck" method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="PhysicalUI/MousePuck/Area2D" to="PhysicalUI/MousePuck" method="_on_Area2D_area_exited"]
-[connection signal="area_entered" from="PhysicalUI/MousePuck/MirroredArea" to="PhysicalUI/MousePuck" method="_on_Area2D_area_entered"]
-[connection signal="area_exited" from="PhysicalUI/MousePuck/MirroredArea" to="PhysicalUI/MousePuck" method="_on_Area2D_area_exited"]

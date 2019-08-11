@@ -40,8 +40,8 @@ func _input(event):
 		if $PhysicalUI/MousePuck.out_of_editing_pad:
 			return
 		ensure_lineset()
-		right_possible_points.append(add_point(ui.get_node("MousePuck").rect_global_position).global_position)
-		left_possible_points.append(add_point(MousePuck.get_mirrored_pos(ui.get_node("MousePuck").rect_global_position)).global_position)
+		right_possible_points.append(add_point(ui.get_node("MousePuck").rect_global_position))
+		left_possible_points.append(add_point(MousePuck.get_mirrored_pos(ui.get_node("MousePuck").rect_global_position)))
 		cur_lineset.points = get_point_array()
 		cur_lineset.regenerate_polygon()
 
@@ -49,10 +49,16 @@ func get_point_array():
 	left_possible_points.sort_custom(self, "_sort_point")
 	right_possible_points.sort_custom(self, "_sort_point")
 	right_possible_points.invert()
-	return left_possible_points + right_possible_points
+	var all_possible_points = left_possible_points + right_possible_points
+	for i in range(0, all_possible_points.size()):
+		all_possible_points[i].index = i
+	var final_points = []
+	for p in all_possible_points:
+		final_points.append(p.global_position)
+	return final_points
 
-func _sort_point(point_a: Vector2, point_b: Vector2):
-	return point_a.y < point_b.y
+func _sort_point(point_a: PossiblePoint, point_b: PossiblePoint):
+	return point_a.global_position.y < point_b.global_position.y
 
 func add_point(new_position: Vector2):
 	var cur_possible_point = possible_point_pack.instance()

@@ -1,22 +1,34 @@
 extends Sprite
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+class_name PossiblePoint
 
-# Called when the node enters the scene tree for the first time.
+var index = 0
+
+var puck_node: Area2D = null
+
 func _ready():
-	pass # Replace with function body.
+	set_process(false)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(_delta):
+	if puck_node == null:
+		set_process(false)
+		return
+	if Input.is_action_pressed("ui_move"):
+		global_position = puck_node.global_position
+
+#func _input(event):
+#	if event is InputEventMouseMotion and Input.is_action_pressed("ui_move") and being_hovered:
+#		global_position = get_global_mouse_position()
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("mouse_puck"):
 		$AnimationPlayer.play("to_being_hovered")
+		puck_node = area
+		set_process(true)
 
 
 func _on_Area2D_area_exited(area):
 	if area.is_in_group("mouse_puck"):
 		$AnimationPlayer.play("away_from_hovered")
+		puck_node = null
+		set_process(false)
