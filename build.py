@@ -9,7 +9,7 @@ import zipfile
 from pathlib import Path
 
 EXE_NAME = "sketch-fight"
-ITCH_ORGANIZATION = "creikey"
+ITCH_ORGANIZATION = "ljhsgames"
 BUILD_DIR = "build"
 SRC_DIR = "src"
 EDITOR_SETTINGS_PATH = "~/.config/godot/editor_settings-3.tres"
@@ -118,6 +118,7 @@ def main():
         cwd=src_dir,
     )
     exporting_process.wait()
+    assert(exporting_process.returncode == 0)
 
     print(f"Making easily accessable zip for {platform}...")
     if platform == "windows":
@@ -125,8 +126,6 @@ def main():
     shutil.make_archive(
         f"{build_dir}/{exe_name}-{platform}", "zip", f"{build_dir}/{platform}"
     )
-    if platform == "windows":
-        exe_name += ".exe"
 
     if butler_push:
         if platform == "mac":
@@ -151,6 +150,7 @@ def main():
                 ]
             )
         pushing_process.wait()
+        assert(pushing_process.returncode == 0)
 
     shutil.copy2(editor_settings_cache_path, editor_settings_path)
     editor_settings_cache_directory.cleanup()
