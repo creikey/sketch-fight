@@ -1,5 +1,7 @@
 extends Control
 
+class_name MousePuck
+
 export (Color) var color = Color()
 export (int) var size = 6.0
 
@@ -10,9 +12,12 @@ func _ready():
 
 func _process(delta):
 	rect_global_position = get_viewport().get_mouse_position()
+	update()
 
 func _draw():
 	draw_circle(Vector2(), size, color)
+	print(rect_global_position)
+	draw_circle(get_mirrored_pos(rect_global_position) - rect_global_position, size, color)
 
 
 func _on_Area2D_area_exited(area):
@@ -29,3 +34,6 @@ func set_out_of_editing_pad(new_out_of_editing_pad):
 		$'../AnimationPlayer'.play("out_of_editing_pad")
 	else: 
 		$'../AnimationPlayer'.play("into_editing_pad")
+
+static func get_mirrored_pos(in_pos: Vector2) -> Vector2:
+	return Vector2(1920 - in_pos.x, in_pos.y)
