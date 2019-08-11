@@ -7,7 +7,7 @@
 [ext_resource path="res://editing-lines.svg" type="Texture" id=5]
 [ext_resource path="res://mirror-line.svg" type="Texture" id=6]
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=1]
 resource_name = "into_editing_pad"
 length = 0.5
 tracks/0/type = "value"
@@ -23,7 +23,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0.0392157 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 resource_name = "out_of_editing_pad"
 length = 0.5
 tracks/0/type = "value"
@@ -39,14 +39,13 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.0392157 ) ]
 }
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=3]
 radius = 1.0
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 250, 500 )
 
-[sub_resource type="Animation" id=3]
-resource_name = "grid-scrolling"
+[sub_resource type="Animation" id=5]
 length = 9.6
 loop = true
 tracks/0/type = "value"
@@ -79,28 +78,28 @@ script = ExtResource( 1 )
 line_set_pack = ExtResource( 2 )
 possible_point_pack = ExtResource( 3 )
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="PhysicalUI" type="CanvasLayer" parent="."]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
-anims/into_editing_pad = SubResource( 4 )
-anims/out_of_editing_pad = SubResource( 5 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PhysicalUI"]
+anims/into_editing_pad = SubResource( 1 )
+anims/out_of_editing_pad = SubResource( 2 )
 
-[node name="MousePuck" type="Control" parent="UI"]
+[node name="MousePuck" type="Control" parent="PhysicalUI"]
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 4 )
 
-[node name="Area2D" type="Area2D" parent="UI/MousePuck"]
+[node name="Area2D" type="Area2D" parent="PhysicalUI/MousePuck"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/MousePuck/Area2D"]
-shape = SubResource( 1 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PhysicalUI/MousePuck/Area2D"]
+shape = SubResource( 3 )
 
 [node name="EditingPad" type="Area2D" parent="."]
 position = Vector2( 960, 540 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EditingPad"]
 position = Vector2( 250, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="EditingPad"]
 modulate = Color( 0.690196, 0.690196, 0.690196, 0.160784 )
@@ -111,7 +110,7 @@ region_filter_clip = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="EditingPad"]
 autoplay = "grid-scrolling"
-anims/grid-scrolling = SubResource( 3 )
+anims/grid-scrolling = SubResource( 5 )
 
 [node name="MirrorSprite" type="Sprite" parent="EditingPad"]
 texture = ExtResource( 6 )
@@ -119,5 +118,5 @@ region_enabled = true
 region_rect = Rect2( 0, 62.6397, 51, 1080 )
 
 [node name="PossiblePoints" type="Node2D" parent="."]
-[connection signal="area_entered" from="UI/MousePuck/Area2D" to="UI/MousePuck" method="_on_Area2D_area_entered"]
-[connection signal="area_exited" from="UI/MousePuck/Area2D" to="UI/MousePuck" method="_on_Area2D_area_exited"]
+[connection signal="area_entered" from="PhysicalUI/MousePuck/Area2D" to="PhysicalUI/MousePuck" method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="PhysicalUI/MousePuck/Area2D" to="PhysicalUI/MousePuck" method="_on_Area2D_area_exited"]

@@ -10,7 +10,9 @@ var cur_lineset: LineSet = null
 var left_possible_points: Array = []
 var right_possible_points: Array = []
 
-onready var ui = get_node("UI")
+var camera_transform: Transform2D = Transform2D() setget set_camera_transform
+
+onready var ui = get_node("PhysicalUI")
 
 func new_sketch():
 	if cur_sketch != null:
@@ -35,7 +37,7 @@ func ensure_lineset():
 
 func _input(event):
 	if event.is_action_pressed("ui_new_point"):
-		if $UI/MousePuck.out_of_editing_pad:
+		if $PhysicalUI/MousePuck.out_of_editing_pad:
 			return
 		ensure_lineset()
 		right_possible_points.append(add_point(ui.get_node("MousePuck").rect_global_position).global_position)
@@ -62,3 +64,7 @@ func write_layer():
 	cur_sketch.insert_lineset(cur_lineset, cur_layer)
 	cur_lineset.queue_free()
 	cur_lineset = null
+
+func set_camera_transform(new_camera_transform):
+	camera_transform = new_camera_transform
+	$PhysicalUI.transform = new_camera_transform
