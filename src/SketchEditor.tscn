@@ -1,8 +1,38 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://SketchEditor.gd" type="Script" id=1]
 [ext_resource path="res://LineSet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://MousePuck.gd" type="Script" id=3]
+[ext_resource path="res://editing-lines.svg" type="Texture" id=4]
+
+[sub_resource type="Animation" id=4]
+resource_name = "into_editing_pad"
+
+[sub_resource type="Animation" id=5]
+resource_name = "out_of_editing_pad"
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 1.0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 500, 500 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "grid-scrolling"
+length = 4.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Rect2( 0, 0, 1000, 1000 ), Rect2( 300, 300, 1000, 1000 ) ]
+}
 
 [node name="SketchEditor" type="Node2D"]
 script = ExtResource( 1 )
@@ -11,8 +41,35 @@ line_set_pack = ExtResource( 2 )
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
+anims/into_editing_pad = SubResource( 4 )
+anims/out_of_editing_pad = SubResource( 5 )
 
 [node name="MousePuck" type="Control" parent="UI"]
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="UI/MousePuck"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/MousePuck/Area2D"]
+shape = SubResource( 1 )
+
+[node name="EditingPad" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EditingPad"]
+position = Vector2( 500, 500 )
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="EditingPad"]
+modulate = Color( 0.690196, 0.690196, 0.690196, 0.490196 )
+texture = ExtResource( 4 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 141.076, 141.076, 1000, 1000 )
+region_filter_clip = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="EditingPad"]
+autoplay = "grid-scrolling"
+anims/grid-scrolling = SubResource( 3 )
+[connection signal="area_entered" from="UI/MousePuck/Area2D" to="UI/MousePuck" method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="UI/MousePuck/Area2D" to="UI/MousePuck" method="_on_Area2D_area_exited"]

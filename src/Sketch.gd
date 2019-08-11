@@ -15,5 +15,5 @@ func add_layer():
 	add_child(new_layer_node)
 	return layer_index
 
-func insert_polygon(in_polygon: Polygon2D, layer_index: int):
-	layers[layer_index].add_child(in_polygon)
+func insert_lineset(in_lineset: LineSet, layer_index: int):
+	layers[layer_index].add_child(in_lineset)

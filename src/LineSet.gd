@@ -6,7 +6,7 @@ var points: Array = []
 var outline_points: PoolVector2Array = PoolVector2Array()
 export var fill_color: Color = Color() setget set_fill_color
 export var outline_color: Color = Color()
-var outline_width: float = 5.0
+var outline_width: float = 3.0
 
 onready var polygon_2d = get_node("Polygon2D")
 
