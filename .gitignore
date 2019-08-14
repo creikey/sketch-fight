@@ -1,4 +1,8 @@
-# exported games
+# platform specific builds
+build-windows/
+build-linux/
+build-mac/
+# native builds
 build/
 
 # vscode files

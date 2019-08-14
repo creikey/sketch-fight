@@ -1,0 +1,5 @@
+option('game_name', type : 'string', value : 'sketch-fight', description: 'Game name used for export executable and butler upload')
+option('godot_name', type : 'string', value : 'godot-headless', description : 'Godot binary path to be searched for')
+option('butler_name', type : 'string', value : 'butler', description : 'path to butler executable used for pushing to the store')
+option('godot_settings', type : 'string', value : '~/.config/godot/editor_settings-3.tres', description : 'Path to godot\'s editor settings used for caching before exporting to prevent it being deleted')
+option('organization_name', type : 'string', value : 'ljhsgames', description : 'Organization to be pushed to with butler for itch')

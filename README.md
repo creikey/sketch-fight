@@ -2,16 +2,11 @@
 A multiplayer fighting game where the pieces are drawn.
 
 ## building
-The script `build.py` uses the following environment variables
+The platforms supported and their names are
+ - `windows`
+ - `mac`
+ - `linux`
 
-`EDITOR_SETTINGS_PATH` - path to the editor settings, caches them so not lost on cli export
-`GODOT_HEADLESS_CMD` - path to godot headless binary command
-`BUTLER_CMD` - path to butler command, for exporting to itch
+The cross compilation files provided are for situations where the build system is an arch linux machine. For cross compiling from a different build machine type, see [https://mesonbuild.com/Cross-compilation.html]
 
-do not put a period in the game name, as it screws up inserting "exe" on windows export
-
-## build script conventions
-
- - lower case version of all caps constant is real updated value from environment
- - export options in godot must be `windows`, `mac`, and `linux`, as in the script file
- - check_for functions error if it can't find it, ensure ensures that it exists
+`meson` is used to build/compile everything
