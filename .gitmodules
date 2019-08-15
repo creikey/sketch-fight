@@ -1,0 +1,3 @@
+[submodule "subprojects/godot-cpp"]
+	path = subprojects/godot-cpp
+	url = git@github.com:creikey/godot-cpp.git
