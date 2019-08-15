@@ -5,3 +5,4 @@ option('scons_name', type : 'string', value : 'scons', description : 'Name of sc
 option('godot_settings', type : 'string', value : '~/.config/godot/editor_settings-3.tres', description : 'Path to godot\'s editor settings used for caching before exporting to prevent it being deleted')
 option('organization_name', type : 'string', value : 'ljhsgames', description : 'Organization to be pushed to with butler for itch')
 option('cpu-threads', type : 'string', value : '12', description : 'Number of cpu threads used for compiling godot C++ bindings')
+option('api_json_path', type : 'string', value : 'godot_headers/api.json', description : 'Relative path from project root of api json file')

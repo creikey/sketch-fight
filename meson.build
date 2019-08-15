@@ -21,24 +21,26 @@ godot_cpp_platform = godot_platform
 if godot_cpp_platform == 'mac'
     godot_cpp_platform = 'osx'
 endif
-godot_cpp_path = join_paths(meson.source_root(), 'godot-cpp')
-godot_cpp_short_lib_name = 'libgodot-cpp.' + godot_cpp_platform + '.debug.64'
-godot_cpp_lib_name = godot_cpp_short_lib_name + '.a'
-godot_cpp_output_path = join_paths(join_paths(godot_cpp_path, 'bin'), godot_cpp_lib_name)
-godot_cpp_include_directories = include_directories([join_paths('godot-cpp', 'include'), join_paths('godot-cpp', join_paths('include', 'core')), join_paths('godot-cpp', join_paths('include', 'gen'))])
 
-# can be uncommented until issue fixed
-# compile_bindings = custom_target('make-bindings',
-#     input : [join_paths(godot_cpp_path, 'SConstruct')],
-#     output : [godot_cpp_lib_name],
-#     command : [make_bindings_script, godot_cpp_path, godot_cpp_platform, scons_bin.path(), godot_cpp_output_path, get_option('cpu-threads'), godot_cpp_lib_name],
-# )
-message(join_paths(godot_cpp_path, 'bin'))
-# custom target link whole broken until https://github.com/mesonbuild/meson/issues/5797 fixed, this is a workaround
-compile_bindings_library = meson.get_compiler('cpp').find_library(godot_cpp_short_lib_name, dirs : join_paths(godot_cpp_path, 'bin'), 
-    static : true)
+libgodot_cpp_proj = subproject('godot-cpp')
+libgodot_cpp = libgodot_cpp_proj.get_variable('lib')
+libgodot_cpp_inc = libgodot_cpp_proj.get_variable('inc')
+libgodot_cpp_dep = libgodot_cpp_proj.get_variable('lib_dep')
+
 
 # game source files
 godot_srcs = files()
 subdir('blend2d-bindings') # blend2d gdnative library
 subdir('src') # godot project source
+
+package_godot = custom_target('package-godot',
+    input: godot_srcs,
+    output: [game_executable_name, game_executable_name + '.pck'],
+    command : [package_script, godot_bin.path(), godot_platform, join_paths(meson.source_root(), meson.current_source_dir()), meson.current_build_dir(), game_executable_name, get_option('godot_settings')],
+    depends : [blend2d_bindings_library],
+    build_by_default : true
+)
+if butler_bin.found()
+    run_target('push',
+        command : [push_script, godot_platform, join_paths(meson.current_build_dir(), game_executable_name), get_option('organization_name'), get_option('game_name'), butler_bin.path()])
+endif

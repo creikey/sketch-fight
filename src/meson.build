@@ -23,14 +23,3 @@ godot_srcs += files(
     'Sketch.gd',
     'Sketch.tscn',
 )
-package_godot = custom_target('package-godot',
-    input: godot_srcs,
-    output: [game_executable_name, game_executable_name + '.pck'],
-    command : [package_script, godot_bin.path(), godot_platform, join_paths(meson.source_root(), meson.current_source_dir()), meson.current_build_dir(), game_executable_name, get_option('godot_settings')],
-    depends : [compile_bindings, blend2d_bindings_library],
-    build_by_default : true
-)
-if butler_bin.found()
-    run_target('push',
-        command : [push_script, godot_platform, join_paths(meson.current_build_dir(), game_executable_name), get_option('organization_name'), get_option('game_name'), butler_bin.path()])
-endif
