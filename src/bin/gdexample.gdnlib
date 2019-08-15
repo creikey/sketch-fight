@@ -8,8 +8,8 @@ reloadable=false
 [entry]
 
 X11.64="res://bin/linux/libblend2dbindings.so"
-Windows.64="res://bin/windows/libgdexample.dll"
-OSX.64="res://bin/mac/libgdexample.dylib"
+Windows.64="res://bin/windows/libblend2dbindings.dll"
+OSX.64="res://bin/mac/libblend2dbindings.dylib"
 
 [dependencies]
 

@@ -61,7 +61,7 @@ exporting_process = subprocess.Popen(
         "--export",
         platform_name,
         "--path",
-        source_directory,
+        os.path.join(source_directory, "src"),
         os.path.join(output_directory, game_name),
     ]
 )
