@@ -7,12 +7,12 @@ reloadable=false
 
 [entry]
 
-X11.64="res://bin/linux/libblend2dbindings.so"
-Windows.64="res://bin/windows/libblend2dbindings.dll"
 OSX.64="res://bin/mac/libblend2dbindings.dylib"
+Windows.64="res://bin/windows/libblend2dbindings.dll"
+X11.64="res://bin/linux/libblend2dbindings.so"
 
 [dependencies]
 
-X11.64=[]
-Windows.64=[]
-OSX.64=[]
+OSX.64=[  ]
+Windows.64=[  ]
+X11.64=[ "res://bin/linux/libblend2d.so" ]

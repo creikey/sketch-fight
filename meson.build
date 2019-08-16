@@ -1,5 +1,7 @@
 project('sketch-fight', 'cpp')
 
+cmake = import('cmake')
+
 # resolve godot platform export variable
 godot_platform = host_machine.system()
 
@@ -16,11 +18,33 @@ if godot_platform == 'windows'
     game_executable_name += '.exe'
 endif
 
+blend2d_cmake_options = []
 
-godot_cpp_platform = godot_platform
-if godot_cpp_platform == 'mac'
-    godot_cpp_platform = 'osx'
+if meson.is_cross_build()
+  if godot_platform == 'windows'
+    blend2d_cmake_options += '-DCMAKE_SYSTEM_NAME=Windows'
+  elif godot_platform == 'linux'
+    blend2d_cmake_options += '-DCMAKE_SYSTEM_NAME=Linux'
+  elif godot_platform == 'mac'
+    blend2d_cmake_options += '-DCMAKE_SYSTEM_NAME=Darwin'
+  else
+    warning('Could not find correct platform string for cmake cross build')
+  endif
+  blend2d_cmake_options += '-DCMAKE_SYSROOT=' + meson.get_cross_property('sys_root', '/')
+  #blend2d_cmake_options += '-DCMAKE_C_COMPILER=' + meson.get_compiler('c')
+  #blend2d_cmake_options += '-DCMAKE_CXX_COMPILER=' + meson.get_compiler('cpp')
 endif
+
+blend2d_proj = cmake.subproject('blend2d',
+    cmake_options : [
+    ] + blend2d_cmake_options)
+blend2d_lib = blend2d_proj.dependency('blend2d')
+if godot_platform == 'windows'
+  blend2d_filename = 'libblend2d.dll'
+else
+  blend2d_filename = 'libblend2d.so'
+endif
+blend2d_path = join_paths(meson.build_root(), 'subprojects', 'blend2d', blend2d_filename)
 
 libgodot_cpp_proj = subproject('godot-cpp')
 libgodot_cpp = libgodot_cpp_proj.get_variable('lib')
@@ -33,10 +57,17 @@ godot_srcs = files()
 subdir('blend2d-bindings') # blend2d gdnative library
 subdir('src') # godot project source
 
+libraries_string = ''
+libraries = [blend2d_bindings_library.full_path(), blend2d_path]
+foreach l : libraries
+    libraries_string += l
+    libraries_string += '\n'
+endforeach
+
 package_godot = custom_target('package-godot',
     input: godot_srcs,
     output: [game_executable_name, game_executable_name + '.pck'],
-    command : [package_script, godot_bin.path(), godot_platform, join_paths(meson.source_root(), meson.current_source_dir()), meson.current_build_dir(), game_executable_name, get_option('godot_settings'), blend2d_bindings_library.full_path()],
+    command : [package_script, godot_bin.path(), godot_platform, join_paths(meson.source_root(), meson.current_source_dir()), meson.current_build_dir(), game_executable_name, get_option('godot_settings'), libraries_string ],
     depends : [blend2d_bindings_library],
     build_by_default : true
 )
