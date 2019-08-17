@@ -31,6 +31,8 @@ if meson.is_cross_build()
     warning('Could not find correct platform string for cmake cross build')
   endif
   blend2d_cmake_options += '-DCMAKE_SYSROOT=' + meson.get_cross_property('sys_root', '/')
+  blend2d_cmake_options += '-DCMAKE_EXE_LINKER_FLAGS= -static'
+  blend2d_cmake_options += '-DBLEND2D_DEPS= -static-libgcc -static-libstdc++'
   #blend2d_cmake_options += '-DCMAKE_C_COMPILER=' + meson.get_compiler('c')
   #blend2d_cmake_options += '-DCMAKE_CXX_COMPILER=' + meson.get_compiler('cpp')
 endif
@@ -55,7 +57,6 @@ libgodot_cpp_dep = libgodot_cpp_proj.get_variable('lib_dep')
 # game source files
 godot_srcs = files()
 subdir('blend2d-bindings') # blend2d gdnative library
-subdir('src') # godot project source
 
 libraries_string = ''
 libraries = [blend2d_bindings_library.full_path(), blend2d_path]
@@ -64,13 +65,8 @@ foreach l : libraries
     libraries_string += '\n'
 endforeach
 
-package_godot = custom_target('package-godot',
-    input: godot_srcs,
-    output: [game_executable_name, game_executable_name + '.pck'],
-    command : [package_script, godot_bin.path(), godot_platform, join_paths(meson.source_root(), meson.current_source_dir()), meson.current_build_dir(), game_executable_name, get_option('godot_settings'), libraries_string ],
-    depends : [blend2d_bindings_library],
-    build_by_default : true
-)
+subdir('src') # godot project source
+
 if butler_bin.found()
     run_target('push',
         command : [push_script, godot_platform, join_paths(meson.current_build_dir(), game_executable_name), get_option('organization_name'), get_option('game_name'), butler_bin.path()])

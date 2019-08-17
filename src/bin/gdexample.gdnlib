@@ -14,5 +14,5 @@ X11.64="res://bin/linux/libblend2dbindings.so"
 [dependencies]
 
 OSX.64=[  ]
-Windows.64=[  ]
+Windows.64=[ "res://bin/windows/libblend2d.dll", "res://bin/windows/libgcc_s_seh-1.dll", "res://bin/windows/libwinpthread-1.dll" ]
 X11.64=[ "res://bin/linux/libblend2d.so" ]

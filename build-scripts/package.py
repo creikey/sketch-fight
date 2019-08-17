@@ -32,7 +32,7 @@ if not os.path.exists(editor_settings_path):
 
 # copy build outputs
 for l in library_paths:
-    shutil.copy2(l, os.path.join(source_directory, "src", "bin", platform_name))
+    shutil.copy2(l, output_directory)
 
 editor_settings_cache_directory = tempfile.TemporaryDirectory()
 editor_settings_cache_path = os.path.join(
@@ -51,10 +51,10 @@ atexit.register(cleanup_editor_settings)
 exporting_process = subprocess.Popen(
     [
         godot_bin_path,
-        "--export",
+        "--export-debug",
         platform_name,
         "--path",
-        os.path.join(source_directory, "src"),
+        os.path.join(source_directory),
         os.path.join(output_directory, game_name),
     ]
 )

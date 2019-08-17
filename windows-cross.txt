@@ -7,6 +7,9 @@ cmake = '/usr/bin/cmake'
 pkgconfig = '/usr/bin/x86_64-w64-mingw32-pkg-config'
 exe_wrapper = 'wine'
 
+[properties]
+sys_root = '/usr/x86_64-w64-mingw32'
+
 [host_machine]
 system = 'windows'
 cpu_family = 'x86_64'
