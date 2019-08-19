@@ -1,9 +1,0 @@
-[submodule "subprojects/godot-cpp"]
-	path = subprojects/godot-cpp
-	url = git@github.com:creikey/godot-cpp.git
-[submodule "subprojects/blend2d"]
-	path = subprojects/blend2d
-	url = https://github.com/blend2d/blend2d
-[submodule "subprojects/asmjit"]
-	path = subprojects/asmjit
-	url = https://github.com/asmjit/asmjit
