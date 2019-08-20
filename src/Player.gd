@@ -1,13 +1,11 @@
 extends RigidBody2D
 
 export var move_force = 1000
-export var sync_time = 0.2
 
 remote var target_transform: Transform2D = Transform2D()
 remote var update_transform = false
 
 var start_position: Vector2 = Vector2()
-var cur_sync_time = 0.0
 
 remotesync var horizontal = 0
 remotesync var vertical = 0
@@ -21,7 +19,7 @@ func _ready():
 	else:
 		target_transform = get_transform()
 
-func _process(delta):
+func _process(_delta):
 	$NametagLabel.rect_rotation = -rotation_degrees
 
 func _integrate_forces(state: Physics2DDirectBodyState):
