@@ -16,7 +16,7 @@ func _process(delta):
 func goto_main_menu():
 	$VBoxContainer/HBoxContainer2.visible = false
 	$VBoxContainer/Port.visible = false
-	$VBoxContainer/TargetIP.visible = false
+	$VBoxContainer/JoinCode.visible = false
 	$VBoxContainer/HBoxContainer/JoinServerButton.visible = false
 	$VBoxContainer/HBoxContainer/StartServerButton.visible = false
 	$VBoxContainer/UPNPButton.visible = false
@@ -26,15 +26,21 @@ func goto_main_menu():
 	$VBoxContainer/UpdateHBoxContainer/Panel/HBoxContainer/ColorPickerButton.color = Lobby.my_info["color"]
 	$VBoxContainer/UpdateHBoxContainer.visible = true
 	$VBoxContainer/UPNPLog.visible = false
+	$VBoxContainer/HBoxContainer4.visible = false
 
 func _on_JoinServerButton_pressed():
 	goto_main_menu()
-	Lobby.join_server(int($VBoxContainer/Port.text), $VBoxContainer/TargetIP.text)
+	var target_dict = parse_json(Marshalls.base64_to_utf8($VBoxContainer/JoinCode.text))
+	if typeof(target_dict) != TYPE_DICTIONARY or not target_dict.has("ip") or not target_dict.has("port"):
+		printerr("Incorrectly formatted join code")
+	# print(target_dict)
+	Lobby.join_server(int(target_dict["port"]), target_dict["ip"])
 	Lobby.emit_signal("update_lobby", Lobby.player_info, Lobby.my_info)
 
 func _on_StartServerButton_pressed():
 	goto_main_menu()
 	$VBoxContainer/HBoxContainer/StartGameButton.visible = true
+	$VBoxContainer/HBoxContainer/CopyJoinCodeButton.visible = true
 	Lobby.start_server(int($VBoxContainer/Port.text))
 	Lobby.emit_signal("update_lobby", Lobby.player_info, Lobby.my_info)
 
@@ -60,7 +66,7 @@ func save_settings():
 		"username": $VBoxContainer/HBoxContainer2/Username.text,
 		"color": $VBoxContainer/HBoxContainer2/Panel/HBoxContainer/ColorPickerButton.color,
 		"port": $VBoxContainer/Port.text,
-		"target_ip": $VBoxContainer/TargetIP.text
+		"join_code": $VBoxContainer/JoinCode.text
 	}
 	var json_settings = to_json(settings_dict)
 	var settings_file: File = File.new()
@@ -87,7 +93,7 @@ func load_settings():
 		resultant_color.a = float(color_array[3])
 		$VBoxContainer/HBoxContainer2/Panel/HBoxContainer/ColorPickerButton.color = resultant_color
 		$VBoxContainer/Port.text = settings_dict["port"]
-		$VBoxContainer/TargetIP.text = settings_dict["target_ip"]
+		$VBoxContainer/JoinCode.text = settings_dict["join_code"]
 	else:
 		printerr("Wrong type from loaded settings file. Expected dict, type is: ", typeof(settings_dict))
 		dir.remove("user://settings.json")
@@ -101,3 +107,22 @@ func _on_UI_tree_exiting():
 func _on_StartGameButton_pressed():
 	assert(get_tree().get_network_unique_id() == 1)
 	Lobby.rpc("preconfigure_game")
+
+
+func _on_CopyJoinCodeButton_pressed():
+	OS.clipboard = Marshalls.utf8_to_base64(to_json(Lobby.target_server_info))
+
+func _on_ClientCheckBox_pressed():
+	$VBoxContainer/JoinCode.visible = true
+	$VBoxContainer/Port.visible = false
+	$VBoxContainer/HBoxContainer/JoinServerButton.visible = true
+	$VBoxContainer/HBoxContainer/StartServerButton.visible = false
+	$VBoxContainer/UPNPButton.visible = false
+
+
+func _on_ServerCheckBox_pressed():
+	$VBoxContainer/JoinCode.visible = false
+	$VBoxContainer/Port.visible = true
+	$VBoxContainer/HBoxContainer/JoinServerButton.visible = false
+	$VBoxContainer/HBoxContainer/StartServerButton.visible = true
+	$VBoxContainer/UPNPButton.visible = true

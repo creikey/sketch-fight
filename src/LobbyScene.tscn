@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://UI.gd" type="Script" id=1]
 [ext_resource path="res://UpdateHBoxContainer.gd" type="Script" id=2]
 [ext_resource path="res://PlayerLog.gd" type="Script" id=3]
 [ext_resource path="res://DefaultPlayerLog.tscn" type="PackedScene" id=4]
+
+[sub_resource type="ButtonGroup" id=2]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -19,9 +21,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="UI/VBoxContainer"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="UI/VBoxContainer"]
 margin_right = 1920.0
-margin_bottom = 34.0
+margin_bottom = 24.0
+
+[node name="ClientCheckBox" type="CheckBox" parent="UI/VBoxContainer/HBoxContainer4"]
+margin_right = 958.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+group = SubResource( 2 )
+text = "client"
+
+[node name="ServerCheckBox" type="CheckBox" parent="UI/VBoxContainer/HBoxContainer4"]
+margin_left = 962.0
+margin_right = 1920.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+pressed = true
+group = SubResource( 2 )
+text = "server"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/VBoxContainer"]
+editor/display_folded = true
+margin_top = 28.0
+margin_right = 1920.0
+margin_bottom = 62.0
 
 [node name="Username" type="LineEdit" parent="UI/VBoxContainer/HBoxContainer2"]
 margin_right = 1822.0
@@ -53,16 +77,17 @@ margin_bottom = 20.0
 text = "color"
 
 [node name="Port" type="LineEdit" parent="UI/VBoxContainer"]
-margin_top = 38.0
-margin_right = 1920.0
-margin_bottom = 62.0
-placeholder_text = "port"
-
-[node name="TargetIP" type="LineEdit" parent="UI/VBoxContainer"]
 margin_top = 66.0
 margin_right = 1920.0
 margin_bottom = 90.0
-placeholder_text = "target ip"
+placeholder_text = "port"
+
+[node name="JoinCode" type="LineEdit" parent="UI/VBoxContainer"]
+visible = false
+margin_top = 94.0
+margin_right = 1920.0
+margin_bottom = 118.0
+placeholder_text = "join code"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer"]
 margin_top = 94.0
@@ -70,13 +95,13 @@ margin_right = 1920.0
 margin_bottom = 114.0
 
 [node name="JoinServerButton" type="Button" parent="UI/VBoxContainer/HBoxContainer"]
+visible = false
 margin_right = 958.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "join server"
 
 [node name="StartServerButton" type="Button" parent="UI/VBoxContainer/HBoxContainer"]
-margin_left = 962.0
 margin_right = 1920.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
@@ -89,6 +114,14 @@ margin_right = 1024.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "start game"
+
+[node name="CopyJoinCodeButton" type="Button" parent="UI/VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 1282.0
+margin_right = 1920.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Copy Join Code"
 
 [node name="UPNPButton" type="Button" parent="UI/VBoxContainer"]
 margin_top = 118.0
@@ -178,8 +211,11 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 1 )
 [connection signal="tree_exiting" from="UI" to="UI" method="_on_UI_tree_exiting"]
+[connection signal="pressed" from="UI/VBoxContainer/HBoxContainer4/ClientCheckBox" to="UI" method="_on_ClientCheckBox_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/HBoxContainer4/ServerCheckBox" to="UI" method="_on_ServerCheckBox_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/HBoxContainer/JoinServerButton" to="UI" method="_on_JoinServerButton_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/HBoxContainer/StartServerButton" to="UI" method="_on_StartServerButton_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/HBoxContainer/StartGameButton" to="UI" method="_on_StartGameButton_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/HBoxContainer/CopyJoinCodeButton" to="UI" method="_on_CopyJoinCodeButton_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/UPNPButton" to="UI" method="_on_UPNPButton_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/UpdateHBoxContainer/UpdateButton" to="UI/VBoxContainer/UpdateHBoxContainer" method="_on_UpdateButton_pressed"]

@@ -7,6 +7,11 @@ var player_info = {}
 # Info we send to other players
 var my_info = { user_name = "server", color = Color8(255, 0, 0) }
 
+var target_server_info = {
+	ip = "127.0.0.1",
+	port = "5563"
+}
+
 var upnp: UPNP = null
 var forwarded_port = -1
 
@@ -14,6 +19,12 @@ func start_server(port):
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(port, 4)
 	get_tree().set_network_peer(peer)
+	target_server_info["port"] = str(port)
+	if upnp != null:
+		target_server_info["ip"] = upnp.query_external_address()
+	else:
+		target_server_info["ip"] = "127.0.0.1"
+
 
 #func _process(delta):
 #	print(player_info)
