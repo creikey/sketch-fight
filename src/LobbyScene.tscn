@@ -5,9 +5,9 @@
 [ext_resource path="res://PlayerLog.gd" type="Script" id=3]
 [ext_resource path="res://DefaultPlayerLog.tscn" type="PackedScene" id=4]
 
-[sub_resource type="ButtonGroup" id=2]
+[sub_resource type="ButtonGroup" id=1]
 
-[sub_resource type="StyleBoxEmpty" id=1]
+[sub_resource type="StyleBoxEmpty" id=2]
 
 [node name="LobbyScene" type="Node2D"]
 
@@ -29,7 +29,7 @@ margin_bottom = 24.0
 margin_right = 958.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
-group = SubResource( 2 )
+group = SubResource( 1 )
 text = "client"
 
 [node name="ServerCheckBox" type="CheckBox" parent="UI/VBoxContainer/HBoxContainer4"]
@@ -38,7 +38,7 @@ margin_right = 1920.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 pressed = true
-group = SubResource( 2 )
+group = SubResource( 1 )
 text = "server"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="UI/VBoxContainer"]
@@ -192,7 +192,7 @@ margin_right = 637.0
 margin_bottom = 938.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="PlayerLog" type="VBoxContainer" parent="UI/VBoxContainer/HBoxContainer3"]
 margin_left = 641.0
@@ -209,7 +209,7 @@ margin_right = 1920.0
 margin_bottom = 938.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
 [connection signal="tree_exiting" from="UI" to="UI" method="_on_UI_tree_exiting"]
 [connection signal="pressed" from="UI/VBoxContainer/HBoxContainer4/ClientCheckBox" to="UI" method="_on_ClientCheckBox_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/HBoxContainer4/ServerCheckBox" to="UI" method="_on_ServerCheckBox_pressed"]

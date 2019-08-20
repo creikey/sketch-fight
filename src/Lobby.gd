@@ -88,13 +88,19 @@ remotesync func preconfigure_game():
 	var world = load("res://World.tscn").instance()
 	get_node("/root").add_child(world)
 	
+	var cur_start_position = Vector2()
+	
 	var player_pack = preload("res://Player.tscn")
 	var my_player = player_pack.instance()
 	my_player.set_name(str(my_peer_id))
 	my_player.set_network_master(my_peer_id)
 	my_player.get_node("ColorRect").color = my_info["color"]
 	my_player.get_node("NametagLabel").text = my_info["user_name"]
+	my_player.start_position = cur_start_position
+	my_player.global_position = cur_start_position
 	get_node("/root/World/Players").add_child(my_player)
+	
+	cur_start_position.x += 100
 	
 	for p in player_info:
 		var cur_player = player_pack.instance()
@@ -102,7 +108,10 @@ remotesync func preconfigure_game():
 		cur_player.set_network_master(p)
 		cur_player.get_node("ColorRect").color = player_info[p]["color"]
 		cur_player.get_node("NametagLabel").text = player_info[p]["user_name"]
+		cur_player.start_position = cur_start_position
+		cur_player.global_position = cur_start_position
 		get_node("/root/World/Players").add_child(cur_player)
+		cur_start_position.x += 100
 	
 	get_node("/root/LobbyScene").queue_free()
 	rpc_id(1, "done_preconfiguring", my_peer_id)
