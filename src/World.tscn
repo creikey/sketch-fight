@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Block.tscn" type="PackedScene" id=1]
+[ext_resource path="res://CameraTarget.gd" type="Script" id=2]
 
 [node name="World" type="Node2D"]
 
@@ -22,3 +23,14 @@ position = Vector2( 810, 380 )
 
 [node name="Block5" parent="Environment" instance=ExtResource( 1 )]
 position = Vector2( 820, 100 )
+
+[node name="CameraTarget" type="Node2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="CameraTarget"]
+current = true
+smoothing_enabled = true
+drag_margin_left = 0.1
+drag_margin_top = 0.1
+drag_margin_right = 0.1
+drag_margin_bottom = 0.1
