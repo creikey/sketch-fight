@@ -1,10 +1,13 @@
 extends RigidBody2D
 
 export var move_force = 1000
+export var sync_time = 0.2
 
 remote var target_transform: Transform2D = Transform2D()
+remote var update_transform = false
 
 var start_position: Vector2 = Vector2()
+var cur_sync_time = 0.0
 
 remote var horizontal = 0
 remote var vertical = 0
@@ -27,12 +30,21 @@ func _integrate_forces(state: Physics2DDirectBodyState):
 		vertical = int(Input.is_action_pressed("g_down")) - int(Input.is_action_pressed("g_up"))
 		rset_unreliable("horizontal", horizontal)
 		rset_unreliable("vertical", vertical)
+#		cur_sync_time += state.step
+#		if cur_sync_time >= sync_time:
+		rset_unreliable("target_transform", state.transform)
+		rset_unreliable("update_transform", true)
+#			cur_sync_time = 0.0
 #	print(Vector2(horizontal * move_force, vertical * move_force))
 #	print(linear_velocity)
+	if update_transform:
+		update_transform = false
+		state.transform = target_transform
 	applied_force = Vector2(horizontal * move_force, vertical * move_force)
 	applied_torque = 0.0
 	if Input.is_action_just_pressed("g_reset"):
 		state.transform.origin = start_position
+	$NametagLabel.rect_rotation = -rad2deg(state.transform.get_rotation())
 #	rset_unreliable("target_transform", state.transform)
 
 
