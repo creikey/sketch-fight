@@ -4,6 +4,8 @@ signal update_lobby(player_info, my_info)
 
 # Player info, associate ID to data
 var player_info = {}
+# sync different positions for each character
+var starting_positions = {}
 # Info we send to other players
 var my_info = { user_name = "server", color = Color8(255, 0, 0) }
 
@@ -85,10 +87,21 @@ remote func register_player(id, info):
 
 remotesync func preconfigure_game():
 	var my_peer_id = get_tree().get_network_unique_id()
+	
+	# unique starting positions
+	var player_id_array = player_info.keys()
+	player_id_array.append(my_peer_id)
+	player_id_array.sort()
+	var cur_start_position = Vector2()
+	for p in player_id_array:
+		starting_positions[p] = cur_start_position
+		cur_start_position.x += 100
+	print(starting_positions)
+	
 	var world = load("res://World.tscn").instance()
 	get_node("/root").add_child(world)
 	
-	var cur_start_position = Vector2()
+	
 	
 	var player_pack = preload("res://Player.tscn")
 	var my_player = player_pack.instance()
@@ -96,8 +109,8 @@ remotesync func preconfigure_game():
 	my_player.set_network_master(my_peer_id)
 	my_player.get_node("ColorRect").color = my_info["color"]
 	my_player.get_node("NametagLabel").text = my_info["user_name"]
-	my_player.start_position = cur_start_position
-	my_player.global_position = cur_start_position
+	my_player.start_position = starting_positions[my_peer_id]
+	my_player.global_position = starting_positions[my_peer_id]
 	get_node("/root/World/Players").add_child(my_player)
 	
 	cur_start_position.x += 100
@@ -108,8 +121,8 @@ remotesync func preconfigure_game():
 		cur_player.set_network_master(p)
 		cur_player.get_node("ColorRect").color = player_info[p]["color"]
 		cur_player.get_node("NametagLabel").text = player_info[p]["user_name"]
-		cur_player.start_position = cur_start_position
-		cur_player.global_position = cur_start_position
+		cur_player.start_position = starting_positions[p]
+		cur_player.global_position = starting_positions[p]
 		get_node("/root/World/Players").add_child(cur_player)
 		cur_start_position.x += 100
 	
