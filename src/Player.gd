@@ -24,8 +24,8 @@ func _process(_delta):
 
 func _integrate_forces(state: Physics2DDirectBodyState):
 	if network_master:
-		rset_unreliable("horizontal", int(Input.is_action_pressed("g_right")) - int(Input.is_action_pressed("g_left")))
-		rset_unreliable("vertical", int(Input.is_action_pressed("g_down")) - int(Input.is_action_pressed("g_up")))
+#		rset_unreliable("horizontal", int(Input.is_action_pressed("g_right")) - int(Input.is_action_pressed("g_left")))
+#		rset_unreliable("vertical", int(Input.is_action_pressed("g_down")) - int(Input.is_action_pressed("g_up")))
 		rset_unreliable("target_transform", state.transform)
 		rset_unreliable("update_transform", true)
 	if update_transform:
@@ -35,3 +35,10 @@ func _integrate_forces(state: Physics2DDirectBodyState):
 	applied_torque = 0.0
 	if Input.is_action_just_pressed("g_reset"):
 		state.transform.origin = start_position
+
+func _input(event):
+	if network_master:
+		if event.is_action("g_right") or event.is_action("g_left"):
+			rset("horizontal", int(Input.is_action_pressed("g_right")) - int(Input.is_action_pressed("g_left")))
+		elif event.is_action("g_up") or event.is_action("g_down"):
+			rset("vertical", int(Input.is_action_pressed("g_down")) - int(Input.is_action_pressed("g_up")))
