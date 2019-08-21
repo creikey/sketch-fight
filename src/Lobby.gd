@@ -14,6 +14,8 @@ var target_server_info = {
 	port = "5563"
 }
 
+var number_of_ships_per_id = {}
+
 var upnp: UPNP = null
 var forwarded_port = -1
 
@@ -89,42 +91,42 @@ remotesync func preconfigure_game():
 	var my_peer_id = get_tree().get_network_unique_id()
 	
 	# unique starting positions
-	var player_id_array = player_info.keys()
-	player_id_array.append(my_peer_id)
-	player_id_array.sort()
-	var cur_start_position = Vector2()
-	for p in player_id_array:
-		starting_positions[p] = cur_start_position
-		cur_start_position.x += 100
-	print(starting_positions)
+#	var player_id_array = player_info.keys()
+#	player_id_array.append(my_peer_id)
+#	player_id_array.sort()
+#	var cur_start_position = Vector2()
+#	for p in player_id_array:
+#		starting_positions[p] = cur_start_position
+#		cur_start_position.x += 100
+#	print(starting_positions)
 	
 	var world = load("res://World.tscn").instance()
 	get_node("/root").add_child(world)
 	
 	
 	
-	var player_pack = preload("res://Player.tscn")
-	var my_player = player_pack.instance()
-	my_player.set_name(str(my_peer_id))
-	my_player.set_network_master(my_peer_id)
-	my_player.get_node("ColorRect").color = my_info["color"]
-	my_player.get_node("NametagLabel").text = my_info["user_name"]
-	my_player.start_position = starting_positions[my_peer_id]
-	my_player.global_position = starting_positions[my_peer_id]
-	get_node("/root/World/Players").add_child(my_player)
+#	var player_pack = preload("res://Player.tscn")
+#	var my_player = player_pack.instance()
+#	my_player.set_name(str(my_peer_id))
+#	my_player.set_network_master(my_peer_id)
+#	my_player.get_node("ColorRect").color = my_info["color"]
+#	my_player.get_node("NametagLabel").text = my_info["user_name"]
+#	my_player.start_position = starting_positions[my_peer_id]
+#	my_player.global_position = starting_positions[my_peer_id]
+#	get_node("/root/World/Players").add_child(my_player)
+#
+#	cur_start_position.x += 100
 	
-	cur_start_position.x += 100
-	
-	for p in player_info:
-		var cur_player = player_pack.instance()
-		cur_player.set_name(str(p))
-		cur_player.set_network_master(p)
-		cur_player.get_node("ColorRect").color = player_info[p]["color"]
-		cur_player.get_node("NametagLabel").text = player_info[p]["user_name"]
-		cur_player.start_position = starting_positions[p]
-		cur_player.global_position = starting_positions[p]
-		get_node("/root/World/Players").add_child(cur_player)
-		cur_start_position.x += 100
+#	for p in player_info:
+#		var cur_player = player_pack.instance()
+#		cur_player.set_name(str(p))
+#		cur_player.set_network_master(p)
+#		cur_player.get_node("ColorRect").color = player_info[p]["color"]
+#		cur_player.get_node("NametagLabel").text = player_info[p]["user_name"]
+#		cur_player.start_position = starting_positions[p]
+#		cur_player.global_position = starting_positions[p]
+#		get_node("/root/World/Players").add_child(cur_player)
+#		cur_start_position.x += 100
 	
 	get_node("/root/LobbyScene").queue_free()
 	rpc_id(1, "done_preconfiguring", my_peer_id)
@@ -136,10 +138,38 @@ remote func done_preconfiguring(who):
 	assert(not who in players_done)
 	
 	players_done.append(who)
-	
 	if players_done.size() == player_info.size() + 1: # account for server
 		rpc("post_configure_game")
 
 remote func post_configure_game():
 	pass
+
+# make sure to free node ship after this is done
+# must have node2d acting as a layer with same name as input node + 's'
+# object must have a function called 'setup_from_args' that takes the array and
+#	duplicates its state
+func transmit_object(object_name: String, object_pack_path: String, arguments: Array): # called when spawning new object
+	var my_peer_id = get_tree().get_network_unique_id()
+	if not number_of_ships_per_id.has(my_peer_id):
+		number_of_ships_per_id[my_peer_id] = 0
+	number_of_ships_per_id[my_peer_id] += 1
 	
+	var my_object = load(object_pack_path).instance()
+	my_object.set_name(str(my_peer_id) + object_name + str(number_of_ships_per_id[my_peer_id]))
+	my_object.set_network_master(my_peer_id)
+	my_object.setup_from_args(arguments)
+	get_node("/root/World/" + object_name + "s").add_child(my_object)
+	
+	rpc("receive_object", object_pack_path, arguments, my_peer_id, object_name)
+
+remote func receive_object(object_pack_path: String, arguments: Array, master_id: int, root_node_name: String): # called on everybody else to show new object
+	if not number_of_ships_per_id.has(master_id):
+		number_of_ships_per_id[master_id] = 0
+	number_of_ships_per_id[master_id] += 1
+	
+	var cur_object = load(object_pack_path).instance()
+	
+	cur_object.set_name(str(master_id) + root_node_name + str(number_of_ships_per_id[master_id]))
+	cur_object.set_network_master(master_id)
+	cur_object.setup_from_args(arguments)
+	get_node("/root/World/" + root_node_name + "s").add_child(cur_object)

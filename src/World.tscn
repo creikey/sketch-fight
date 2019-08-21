@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Block.tscn" type="PackedScene" id=1]
 [ext_resource path="res://CameraTarget.gd" type="Script" id=2]
 [ext_resource path="res://points-1.png" type="Texture" id=3]
+[ext_resource path="res://ShipEditor.gd" type="Script" id=4]
+[ext_resource path="res://Ship.tscn" type="PackedScene" id=5]
+[ext_resource path="res://EditingShip.tscn" type="PackedScene" id=6]
+[ext_resource path="res://editing-line.svg" type="Texture" id=7]
+[ext_resource path="res://ConveyorBelt.gd" type="Script" id=8]
 
 [node name="World" type="Node2D"]
 
@@ -43,12 +48,35 @@ drag_margin_right = 0.1
 drag_margin_bottom = 0.1
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+editor/display_folded = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_mirroring = Vector2( 15360, 8640 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
-modulate = Color( 0, 0, 0, 1 )
+modulate = Color( 0, 0, 0, 0.25098 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 15360, 8640 )
+
+[node name="Ships" type="Node2D" parent="."]
+
+[node name="ShipEditor" type="Node2D" parent="."]
+script = ExtResource( 4 )
+ship_pack = ExtResource( 5 )
+editing_ship_pack = ExtResource( 6 )
+
+[node name="ConveyorBelt" type="Sprite" parent="ShipEditor"]
+modulate = Color( 0, 0, 0, 0.133333 )
+texture = ExtResource( 7 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 600, 600 )
+script = ExtResource( 8 )
+
+[node name="BackgroundEditingPad" type="ColorRect" parent="ShipEditor"]
+margin_left = -350.0
+margin_top = -350.0
+margin_right = 350.0
+margin_bottom = 350.0
+grow_horizontal = 2
+color = Color( 0, 0, 0, 0.0588235 )
