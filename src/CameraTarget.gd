@@ -12,7 +12,6 @@ func _process(delta):
 	var output_zoom = ((target_zoom - $Camera2D.zoom.x) * c) + $Camera2D.zoom.x
 	$Camera2D.zoom.x = output_zoom
 	$Camera2D.zoom.y = output_zoom
-	print(output_zoom)
 
 func _input(event):
 	if event.is_action("ui_zoom_in"):

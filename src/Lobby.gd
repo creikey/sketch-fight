@@ -5,7 +5,7 @@ signal update_lobby(player_info, my_info)
 # Player info, associate ID to data
 var player_info = {}
 # sync different positions for each character
-var starting_positions = {}
+#var starting_positions = {}
 # Info we send to other players
 var my_info = { user_name = "server", color = Color8(255, 0, 0) }
 
@@ -75,6 +75,7 @@ func _connected_ok():
 
 func _server_disconnected():
 	print("Server disconnected")
+	get_tree().change_scene("res://ServerQuit.tscn")
 	pass # Server kicked us; show error and abort.
 
 func _connected_fail():
@@ -129,7 +130,10 @@ remotesync func preconfigure_game():
 #		cur_start_position.x += 100
 	
 	get_node("/root/LobbyScene").queue_free()
-	rpc_id(1, "done_preconfiguring", my_peer_id)
+	if my_peer_id == 1:
+		pass
+	else:
+		rpc_id(1, "done_preconfiguring", my_peer_id)
 
 var players_done = []
 remote func done_preconfiguring(who):
@@ -143,6 +147,15 @@ remote func done_preconfiguring(who):
 
 remote func post_configure_game():
 	pass
+
+func add_categorical_node(root_node_name: String, master_id: int, object: Node):
+	var parent_parent_node_name = "/root/World/" + root_node_name + "s"
+	var parent_node_name = str(master_id)
+	if not get_node(parent_parent_node_name).has_node(parent_node_name):
+		var cur_parent_node = Node2D.new()
+		cur_parent_node.set_name(parent_node_name)
+		get_node(parent_parent_node_name).add_child(cur_parent_node)
+	get_node(parent_parent_node_name + "/" + parent_node_name).add_child(object)
 
 # make sure to free node ship after this is done
 # must have node2d acting as a layer with same name as input node + 's'
@@ -158,7 +171,8 @@ func transmit_object(object_name: String, object_pack_path: String, arguments: A
 	my_object.set_name(str(my_peer_id) + object_name + str(number_of_ships_per_id[my_peer_id]))
 	my_object.set_network_master(my_peer_id)
 	my_object.setup_from_args(arguments)
-	get_node("/root/World/" + object_name + "s").add_child(my_object)
+	add_categorical_node(object_name, my_peer_id, my_object)
+#	get_node("/root/World/" + object_name + "s").add_child(my_object)
 	
 	rpc("receive_object", object_pack_path, arguments, my_peer_id, object_name)
 
@@ -172,4 +186,11 @@ remote func receive_object(object_pack_path: String, arguments: Array, master_id
 	cur_object.set_name(str(master_id) + root_node_name + str(number_of_ships_per_id[master_id]))
 	cur_object.set_network_master(master_id)
 	cur_object.setup_from_args(arguments)
-	get_node("/root/World/" + root_node_name + "s").add_child(cur_object)
+	add_categorical_node(root_node_name, master_id, cur_object)
+#	var parent_parent_node_name = "/root/World/" + root_node_name + "s"
+#	var parent_node_name = str(master_id)
+#	if not parent_parent_node_name.has(parent_node_name):
+#		var cur_parent_node = Node2D.new()
+#		cur_parent_node.set_name(parent_node_name)
+#		parent_parent_node_name.add_child(cur_parent_node)
+#	get_node(parent_parent_node_name + "/" + parent_node_name).add_child(cur_object)
