@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Block.tscn" type="PackedScene" id=1]
 [ext_resource path="res://CameraTarget.gd" type="Script" id=2]
-[ext_resource path="res://grid.png" type="Texture" id=3]
+[ext_resource path="res://points-1.png" type="Texture" id=3]
 [ext_resource path="res://ZoomableGrid.tscn" type="PackedScene" id=4]
 
 [node name="World" type="Node2D"]
@@ -41,16 +41,17 @@ drag_margin_bottom = 0.1
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-visible = false
-motion_mirroring = Vector2( 3840, 2160 )
+motion_mirroring = Vector2( 15360, 8640 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+modulate = Color( 0, 0, 0, 1 )
 texture = ExtResource( 3 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 3840, 2160 )
+region_rect = Rect2( 0, 0, 15360, 8640 )
 
 [node name="GridLayer" type="CanvasLayer" parent="."]
 layer = -1
 
 [node name="ZoomableGrid" parent="GridLayer" instance=ExtResource( 4 )]
+visible = false
 camera_path = NodePath("../../CameraTarget/Camera2D")
