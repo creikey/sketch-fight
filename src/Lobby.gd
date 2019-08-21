@@ -75,6 +75,7 @@ func _connected_ok():
 
 func _server_disconnected():
 	print("Server disconnected")
+# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://ServerQuit.tscn")
 	pass # Server kicked us; show error and abort.
 

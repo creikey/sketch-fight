@@ -5,7 +5,9 @@ class_name NetworkedRigidBody
 export var move_force = 1000
 
 remote var target_transform: Transform2D = Transform2D()
-remote var update_transform = false
+remote var target_linear_velocity: Vector2 = Vector2()
+remote var target_angular_velocity: float = 0.0
+remote var update_properties = false
 
 #var start_position: Vector2 = Vector2()
 
@@ -26,10 +28,14 @@ func _ready():
 func _integrate_forces(state: Physics2DDirectBodyState):
 	if network_master:
 		rset_unreliable("target_transform", state.transform)
-		rset_unreliable("update_transform", true)
-	if update_transform:
-		update_transform = false
+		rset_unreliable("target_linear_velocity", state.linear_velocity)
+		rset_unreliable("target_angular_velocity", state.angular_velocity)
+		rset_unreliable("update_properties", true)
+	if update_properties:
+		update_properties = false
 		state.transform = target_transform
+		state.linear_velocity = target_linear_velocity
+		state.angular_velocity = target_angular_velocity
 	applied_force = Vector2(horizontal * move_force, vertical * move_force)
 	applied_torque = 0.0
 #	if Input.is_action_just_pressed("g_reset"):
