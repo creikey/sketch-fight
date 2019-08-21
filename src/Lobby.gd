@@ -16,6 +16,8 @@ var target_server_info = {
 
 var number_of_ships_per_id = {}
 
+var player_resources = {}
+
 var upnp: UPNP = null
 var forwarded_port = -1
 
@@ -130,6 +132,10 @@ remotesync func preconfigure_game():
 #		cur_player.global_position = starting_positions[p]
 #		get_node("/root/World/Players").add_child(cur_player)
 #		cur_start_position.x += 100
+	
+	player_resources[my_peer_id] = 0
+	for p in player_info.keys():
+		player_resources[p] = 0
 	
 	get_node("/root/LobbyScene").queue_free()
 	if my_peer_id == 1:
