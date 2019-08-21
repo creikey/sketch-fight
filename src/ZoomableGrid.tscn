@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ZoomableGrid.gd" type="Script" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+
+uniform vec4 grid_color : hint_color;
+uniform mat4 global_transform;
+uniform vec2 global_translation;
+uniform vec2 zoom = vec2(1.0, 1.0);
+uniform int grid_size = 64;
+
+varying vec2 world_coords;
+
+void vertex() {
+	world_coords = (global_transform * vec4(VERTEX, 0.0, 1.0)).xy;
+}
+
+void fragment() {
+	vec2 coordinates = FRAGCOORD.xy;
+//	vec2 coordinates = world_coords;
+//	COLOR = vec4(world_coords.x/1920.0, 0.0, 0.0, 1.0);
+	if((int(coordinates.y) + int(global_translation.y)) % int(float(grid_size)/zoom.y) == 0 || (int(coordinates.x) - int(global_translation.x)) % int(float(grid_size)/zoom.x) == 0) {
+		COLOR = vec4(vec3(0.0), 1.0);
+	} else {
+		COLOR = vec4(0.0);
+	}
+//	COLOR = vec4(step(coordinates.x, 500.0), 0.0, 0.0, 1.0);
+//	vec2 coordinates = UV;
+//	COLOR = vec4(coordinates.x, 0.0, 0.0, 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/grid_color = null
+shader_param/global_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+shader_param/global_translation = Vector2( 0, 0 )
+shader_param/zoom = Vector2( 1, 1 )
+shader_param/grid_size = 64
+
+[node name="ZoomableGrid" type="ColorRect"]
+material = SubResource( 2 )
+margin_right = 1920.0
+margin_bottom = 1080.0
+script = ExtResource( 1 )
