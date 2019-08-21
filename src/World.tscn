@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Environment.gd" type="Script" id=1]
-[ext_resource path="res://Block.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ResourceBlock.tscn" type="PackedScene" id=2]
 [ext_resource path="res://CameraTarget.gd" type="Script" id=3]
 [ext_resource path="res://points-1.png" type="Texture" id=4]
 [ext_resource path="res://ShipEditor.gd" type="Script" id=5]
@@ -16,21 +16,9 @@
 
 [node name="Environment" type="Node2D" parent="."]
 script = ExtResource( 1 )
+resource_block_pack = ExtResource( 2 )
 
-[node name="Block" parent="Environment" instance=ExtResource( 2 )]
-position = Vector2( 390, 240 )
-
-[node name="Block2" parent="Environment" instance=ExtResource( 2 )]
-position = Vector2( 180, 150 )
-
-[node name="Block3" parent="Environment" instance=ExtResource( 2 )]
-position = Vector2( 190, 490 )
-
-[node name="Block4" parent="Environment" instance=ExtResource( 2 )]
-position = Vector2( 810, 380 )
-
-[node name="Block5" parent="Environment" instance=ExtResource( 2 )]
-position = Vector2( 820, 100 )
+[node name="ResourceBlocks" type="Node2D" parent="Environment"]
 
 [node name="CameraTarget" type="Node2D" parent="."]
 script = ExtResource( 3 )

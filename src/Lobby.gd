@@ -104,6 +104,7 @@ remotesync func preconfigure_game():
 	
 	var world = load("res://World.tscn").instance()
 	get_node("/root").add_child(world)
+	get_node("/root/World/Environment").set_network_master(1)
 	
 	
 	

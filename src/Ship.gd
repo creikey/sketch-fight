@@ -2,7 +2,7 @@ extends RigidBody2D
 
 class_name NetworkedRigidBody
 
-export var move_force = 1000
+export var move_force = 10000
 
 remote var target_transform: Transform2D = Transform2D()
 remote var target_linear_velocity: Vector2 = Vector2()
