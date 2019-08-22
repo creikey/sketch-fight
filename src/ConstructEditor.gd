@@ -5,7 +5,9 @@ class_name ConstructEditor
 enum CONSTRUCT_TYPE { ship, resource_block }
 
 export (PackedScene) var ship_pack
+export (PackedScene) var resource_farmer_pack
 export (PackedScene) var editing_ship_pack
+export (PackedScene) var editing_resource_farmer_pack
 
 var editing = false
 var cur_construct = null
@@ -38,10 +40,13 @@ func _input(event):
 		match construct_type:
 			CONSTRUCT_TYPE.ship:
 				cur_construct = editing_ship_pack.instance()
+			CONSTRUCT_TYPE.resource_block:
+				cur_construct = editing_resource_farmer_pack.instance()
 			_:
 				printerr("Unknown construct type to place: ", construct_type)
 				show_build_error()
 				return
+		ensure_editing(cur_construct)
 		cur_construct.modulate.a = 0.7
 		add_child(cur_construct)
 	elif event.is_action_pressed("g_enter_ship") and editing:
@@ -50,6 +55,8 @@ func _input(event):
 		match construct_type:
 			CONSTRUCT_TYPE.ship:
 				Lobby.transmit_object("Ship", ship_pack.resource_path, [cur_construct.global_position, Lobby.my_info["color"]])
+			CONSTRUCT_TYPE.resource_block:
+				Lobby.transmit_object("ResourceFarmer", resource_farmer_pack.resource_path, [cur_construct.global_position, Lobby.my_info["color"], get_tree().get_network_unique_id()])
 			_:
 				printerr("Cannot transmit object: ", construct_type)
 				show_place_error()
@@ -58,6 +65,10 @@ func _input(event):
 		cur_construct = null
 		visible = false
 		editing = false
+
+func ensure_editing(node):
+	if node.get("editing") != null:
+		node.editing = true
 
 func show_build_error():
 	$AnimationPlayer.play("error")
