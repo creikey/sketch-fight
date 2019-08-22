@@ -27,8 +27,9 @@ func _input(event):
 		global_position = get_global_mouse_position()
 	elif event.is_action_pressed("g_new_ship") and editing:
 		if cur_construct:
+			show_build_error()
 			return
-
+		# placing the construct
 		match construct_type:
 			CONSTRUCT_TYPE.ship:
 				cur_construct = editing_ship_pack.instance()
@@ -36,6 +37,7 @@ func _input(event):
 				printerr("Unknown construct type to place: ", unknown_type)
 				show_build_error()
 				return
+		cur_construct.modulate.a = 0.7
 		add_child(cur_construct)
 	elif event.is_action_pressed("g_enter_ship") and editing:
 		if not cur_construct:
@@ -53,7 +55,7 @@ func _input(event):
 		editing = false
 
 func show_build_error():
-	pass
+	$AnimationPlayer.play("error")
 
 func show_place_error():
 	pass
