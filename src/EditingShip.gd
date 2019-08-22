@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name EditingShip
+
 const ships_path = "res://"
 
 var ship_type = "FighterShip"

@@ -1,8 +1,10 @@
 extends RigidBody2D
+# WILL NOT WORK AS TOOL SCRIPT, checks variable on ready
 
 class_name Ship
 
 export var move_force = 10000
+export var turn_force = 100000.0
 
 remote var target_transform: Transform2D = Transform2D()
 remote var target_linear_velocity: Vector2 = Vector2()
@@ -14,10 +16,13 @@ remote var update_properties = false
 remotesync var horizontal = 0
 remotesync var vertical = 0
 
+onready var typical_angular_drag = angular_damp
+
 var network_master = false
 var ship_type = "FighterShip"
 
 func _ready():
+#	update_ship()
 	if is_network_master():
 		network_master = true
 	else:
@@ -37,8 +42,13 @@ func _integrate_forces(state: Physics2DDirectBodyState):
 		state.transform = target_transform
 		state.linear_velocity = target_linear_velocity
 		state.angular_velocity = target_angular_velocity
-	applied_force = Vector2(horizontal * move_force, vertical * move_force)
-	applied_torque = 0.0
+#	applied_force = Vector2(horizontal * move_force, vertical * move_force)
+	applied_force = Vector2(0, vertical * move_force).rotated(state.transform.get_rotation())
+	if horizontal == 0:
+		angular_damp = typical_angular_drag
+	else:
+		angular_damp = -1
+	applied_torque = horizontal * turn_force
 #	if Input.is_action_just_pressed("g_reset"):
 #		state.transform.origin = start_position
 
@@ -49,6 +59,13 @@ func _input(event):
 		elif event.is_action("g_up") or event.is_action("g_down"):
 			rset("vertical", int(Input.is_action_pressed("g_down")) - int(Input.is_action_pressed("g_up")))
 
+func update_ship():
+	if has_node(ship_type):
+		get_node(ship_type).queue_free()
+	add_child(load(EditingShip.ships_path + ship_type + ".tscn").instance())
+
 func setup_from_args(args: Array):
 	global_position = args[0]
-	get_node(ship_type).get_node("Sprite").modulate = args[1]
+	ship_type = args[1]
+	update_ship()
+	get_node(ship_type).get_node("Sprite").modulate = args[2]

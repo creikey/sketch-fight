@@ -11,6 +11,10 @@
 [sub_resource type="StyleBoxEmpty" id=2]
 
 [node name="LobbyScene" type="Node2D"]
+__meta__ = {
+"_edit_horizontal_guides_": [  ],
+"_edit_vertical_guides_": [  ]
+}
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 1 )

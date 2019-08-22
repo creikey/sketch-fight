@@ -44,6 +44,7 @@ func _on_JoinServerButton_pressed():
 	Lobby.emit_signal("update_lobby", Lobby.player_info, Lobby.my_info)
 
 func _on_StartServerButton_pressed():
+	update_my_info()
 	goto_main_menu()
 	$PanelContainer/VBoxContainer/HBoxContainer/StartGameButton.visible = true
 	$PanelContainer/VBoxContainer/HBoxContainer/CopyJoinCodeButton.visible = true
