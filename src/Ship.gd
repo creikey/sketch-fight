@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-class_name NetworkedRigidBody
+class_name Ship
 
 export var move_force = 10000
 

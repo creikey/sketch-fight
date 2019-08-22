@@ -7,14 +7,15 @@
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.913725, 0.913725, 0.913725, 1 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-scale = Vector2( 0.5, 0.5 )
-polygon = PoolVector2Array( 223, -48, 223, -42.7, 136.4, 216, 63, 216, -141, 214, -141, 210.3, -223.7, -52, -220.6, -52, -2, -208, -2, -209.2, 0.199997, -210.3 )
 
 [node name="GenerationTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
+
+[node name="NormalCollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 0.5, 0.5 )
+polygon = PoolVector2Array( 162, -52, 162, -47.7, 98.4, 139, 40, 139, -101, 137, -101, 134.3, -161.7, -55, -158.6, -55, -1, -168, -1, -169.2, 1.2, -170.3 )
 [connection signal="timeout" from="GenerationTimer" to="." method="_on_GenerationTimer_timeout"]

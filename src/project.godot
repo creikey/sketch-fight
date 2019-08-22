@@ -12,10 +12,16 @@ _global_script_classes=[ {
 "base": "RigidBody2D",
 "class": "NetworkedRigidBody",
 "language": "GDScript",
+"path": "res://NetworkedRigidBody2D.gd"
+}, {
+"base": "RigidBody2D",
+"class": "Ship",
+"language": "GDScript",
 "path": "res://Ship.gd"
 } ]
 _global_script_class_icons={
-"NetworkedRigidBody": ""
+"NetworkedRigidBody": "",
+"Ship": ""
 }
 
 [application]

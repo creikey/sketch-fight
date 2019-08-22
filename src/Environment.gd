@@ -10,14 +10,14 @@ func _ready():
 	if is_network_master():
 		var number_of_resource_blocks = 0
 		var cur_spawn_location = Vector2(resource_block_width, resource_block_width)
-		while cur_spawn_location.y < stage_size:
-			while cur_spawn_location.x < stage_size:
+		while cur_spawn_location.y < stage_size - resource_block_width:
+			while cur_spawn_location.x < stage_size - resource_block_width:
 				var output_rotation = rand_range(0, 360)
 				spawn_resource_block(cur_spawn_location, number_of_resource_blocks, output_rotation)
 				rpc("spawn_resource_block", cur_spawn_location, number_of_resource_blocks,output_rotation)
 				number_of_resource_blocks += 1
-				cur_spawn_location.x += rand_range(resource_block_width, resource_density*stage_size)
-			cur_spawn_location.y += rand_range(resource_block_width, resource_density*stage_size)
+				cur_spawn_location.x += resource_density*stage_size
+			cur_spawn_location.y += resource_density*stage_size
 			cur_spawn_location.x = resource_block_width
 
 remote func spawn_resource_block(spawn_location: Vector2, cur_count: int, rot: float):

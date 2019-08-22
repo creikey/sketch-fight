@@ -1,6 +1,7 @@
 extends Node
 
 signal update_lobby(player_info, my_info)
+signal update_resources
 
 # Player info, associate ID to data
 var player_info = {}
@@ -17,32 +18,19 @@ var target_server_info = {
 var number_of_ships_per_id = {}
 
 var player_resources = {}
+onready var player_resource_timer: Timer = null
+func _on_player_resource_timer_timeout():
+	if get_tree().paused:
+		return
+	emit_signal("update_resources")
 
 var upnp: UPNP = null
 var forwarded_port = -1
 
-func start_server(port):
-	var peer = NetworkedMultiplayerENet.new()
-	peer.create_server(port, 4)
-	get_tree().set_network_peer(peer)
-	target_server_info["port"] = str(port)
-	if upnp != null:
-		target_server_info["ip"] = upnp.query_external_address()
-	else:
-		target_server_info["ip"] = "127.0.0.1"
-
-
-#func _process(delta):
-#	print(player_info)
-
-func join_server(port, ip):
-	var peer = NetworkedMultiplayerENet.new()
-	peer.create_client(ip, port)
-	get_tree().set_network_peer(peer)
-
 # Connect all functions
 
 func _ready():
+#	pause_mode = Node.PAUSE_MODE_PROCESS
 # warning-ignore:return_value_discarded
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 # warning-ignore:return_value_discarded
@@ -55,6 +43,31 @@ func _ready():
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 # warning-ignore:return_value_discarded
 	connect("tree_exiting", self, "_on_tree_exiting")
+	player_resource_timer = Timer.new()
+	player_resource_timer.wait_time = 0.5
+	player_resource_timer.one_shot = false
+	player_resource_timer.autostart = false
+	player_resource_timer.stop()
+# warning-ignore:return_value_discarded
+	player_resource_timer.connect("timeout", self, "_on_player_resource_timer_timeout")
+	add_child(player_resource_timer)
+
+func start_server(port):
+	var peer = NetworkedMultiplayerENet.new()
+	peer.create_server(port, 4)
+	get_tree().set_network_peer(peer)
+	target_server_info["port"] = str(port)
+	if upnp != null:
+		target_server_info["ip"] = upnp.query_external_address()
+	else:
+		target_server_info["ip"] = "127.0.0.1"
+
+func join_server(port, ip):
+	var peer = NetworkedMultiplayerENet.new()
+	peer.create_client(ip, port)
+	get_tree().set_network_peer(peer)
+
+
 
 func _on_tree_exiting():
 	if upnp != null:
@@ -69,6 +82,8 @@ func _player_connected(id):
 
 func _player_disconnected(id):
 	player_info.erase(id) # Erase player from info.
+	player_resources.erase(id)
+	emit_signal("update_resources")
 	emit_signal("update_lobby", player_info, my_info)
 
 func _connected_ok():
@@ -77,6 +92,7 @@ func _connected_ok():
 
 func _server_disconnected():
 	print("Server disconnected")
+	get_tree().paused = true
 # warning-ignore:return_value_discarded
 	get_tree().change_scene("res://ServerQuit.tscn")
 	pass # Server kicked us; show error and abort.
@@ -136,7 +152,7 @@ remotesync func preconfigure_game():
 	player_resources[my_peer_id] = 0
 	for p in player_info.keys():
 		player_resources[p] = 0
-	
+	player_resource_timer.start()
 	get_node("/root/LobbyScene").queue_free()
 	if my_peer_id == 1:
 		pass

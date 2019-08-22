@@ -1,0 +1,21 @@
+[gd_scene format=2]
+
+[node name="PlayerAndScore" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="Username" type="Label" parent="."]
+margin_top = 13.0
+margin_right = 64.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+text = "username"
+
+[node name="Score" type="Label" parent="."]
+margin_left = 68.0
+margin_top = 13.0
+margin_right = 76.0
+margin_bottom = 27.0
+size_flags_horizontal = 9
+text = "0"
