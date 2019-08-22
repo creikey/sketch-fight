@@ -3,7 +3,9 @@
 [ext_resource path="res://ResourceFarmer.gd" type="Script" id=1]
 [ext_resource path="res://resource-farmer.png" type="Texture" id=2]
 
-[node name="ResourceFarmer" type="Area2D"]
+[node name="ResourceFarmer" type="Area2D" groups=[
+"resource_farmers",
+]]
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]

@@ -101,6 +101,8 @@ region_rect = Rect2( 0, 0, 15360, 8640 )
 
 [node name="Ships" type="Node2D" parent="."]
 
+[node name="ResourceFarmers" type="Node2D" parent="."]
+
 [node name="ConstructEditor" type="Node2D" parent="."]
 script = ExtResource( 7 )
 ship_pack = ExtResource( 8 )
@@ -134,6 +136,4 @@ editor/display_folded = true
 shape = SubResource( 2 )
 
 [node name="SnapperTwean" type="Tween" parent="ConstructEditor"]
-
-[node name="ResourceFarmers" type="Node2D" parent="."]
 [connection signal="body_entered" from="ConstructEditor/Snapper" to="ConstructEditor" method="_on_Snapper_body_entered"]

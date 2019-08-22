@@ -34,3 +34,11 @@ func set_number_of_ships(new_number_of_ships):
 		$FadingTween.interpolate_property(self, NodePath("modulate:a"), fading_amount, 1.0, 0.4, Tween.TRANS_LINEAR, Tween.EASE_IN)
 		$FadingTween.start()
 	number_of_ships = new_number_of_ships
+
+func can_place() -> bool:
+	if not editing:
+		return true
+	for a in get_overlapping_areas():
+		if a.is_in_group("resource_farmers"):
+			return false
+	return true

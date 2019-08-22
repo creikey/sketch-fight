@@ -36,7 +36,7 @@ func _input(event):
 		if cur_construct:
 			show_build_error()
 			return
-		# placing the construct
+		# creating the construct
 		match construct_type:
 			CONSTRUCT_TYPE.ship:
 				cur_construct = editing_ship_pack.instance()
@@ -52,10 +52,14 @@ func _input(event):
 	elif event.is_action_pressed("g_enter_ship") and editing:
 		if not cur_construct:
 			return
+		# placing construct in world
 		match construct_type:
 			CONSTRUCT_TYPE.ship:
 				Lobby.transmit_object("Ship", ship_pack.resource_path, [cur_construct.global_position, Lobby.my_info["color"]])
 			CONSTRUCT_TYPE.resource_block:
+				if not cur_construct.can_place():
+					show_place_error()
+					return
 				Lobby.transmit_object("ResourceFarmer", resource_farmer_pack.resource_path, [cur_construct.global_position, Lobby.my_info["color"], get_tree().get_network_unique_id()])
 			_:
 				printerr("Cannot transmit object: ", construct_type)
@@ -74,7 +78,7 @@ func show_build_error():
 	$AnimationPlayer.play("error")
 
 func show_place_error():
-	pass
+	show_build_error()
 
 func _on_Snapper_body_entered(body):
 	if body.is_in_group("constructable"):
