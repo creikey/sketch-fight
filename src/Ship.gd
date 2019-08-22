@@ -15,6 +15,7 @@ remotesync var horizontal = 0
 remotesync var vertical = 0
 
 var network_master = false
+var ship_type = "FighterShip"
 
 func _ready():
 	if is_network_master():
@@ -50,4 +51,4 @@ func _input(event):
 
 func setup_from_args(args: Array):
 	global_position = args[0]
-	$Sprite.modulate = args[1]
+	get_node(ship_type).get_node("Sprite").modulate = args[1]
