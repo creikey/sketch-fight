@@ -1,6 +1,8 @@
 extends Node2D
 
-enum CONSTRUCT_TYPE { ship, base }
+class_name ConstructEditor
+
+enum CONSTRUCT_TYPE { ship, resource_block }
 
 export (PackedScene) var ship_pack
 export (PackedScene) var editing_ship_pack
@@ -21,10 +23,13 @@ func _input(event):
 				cur_construct.queue_free()
 				cur_construct = null
 			return
+		$Snapper/CollisionShape2D.disabled = true
+		$SnapperTwean.stop_all()
 		visible = true
 		editing = true
 		construct_type = CONSTRUCT_TYPE.ship
 		global_position = get_global_mouse_position()
+		$Snapper/CollisionShape2D.disabled = false
 	elif event.is_action_pressed("g_new_ship") and editing:
 		if cur_construct:
 			show_build_error()
@@ -33,8 +38,8 @@ func _input(event):
 		match construct_type:
 			CONSTRUCT_TYPE.ship:
 				cur_construct = editing_ship_pack.instance()
-			var unknown_type:
-				printerr("Unknown construct type to place: ", unknown_type)
+			_:
+				printerr("Unknown construct type to place: ", construct_type)
 				show_build_error()
 				return
 		cur_construct.modulate.a = 0.7
@@ -45,8 +50,8 @@ func _input(event):
 		match construct_type:
 			CONSTRUCT_TYPE.ship:
 				Lobby.transmit_object("Ship", ship_pack.resource_path, [cur_construct.global_position, Lobby.my_info["color"]])
-			var unknown_type:
-				printerr("Cannot transmit object: ", unknown_type)
+			_:
+				printerr("Cannot transmit object: ", construct_type)
 				show_place_error()
 				return
 		cur_construct.queue_free()
@@ -59,3 +64,10 @@ func show_build_error():
 
 func show_place_error():
 	pass
+
+func _on_Snapper_body_entered(body):
+	if body.is_in_group("constructable"):
+		construct_type = body.construct_type
+		$SnapperTwean.stop_all()
+		$SnapperTwean.interpolate_property(self, "position", position, body.global_position, 0.5, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+		$SnapperTwean.start()

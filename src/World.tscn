@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://PlayerResources.gd" type="Script" id=1]
 [ext_resource path="res://PlayerAndScore.tscn" type="PackedScene" id=2]
@@ -39,6 +39,9 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 1.0, -1.0, 1.0 ]
 }
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 423.414
 
 [node name="World" type="Node2D"]
 
@@ -119,3 +122,11 @@ color = Color( 0, 0, 0, 0.0588235 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ConstructEditor"]
 anims/error = SubResource( 1 )
+
+[node name="Snapper" type="Area2D" parent="ConstructEditor"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConstructEditor/Snapper"]
+shape = SubResource( 2 )
+
+[node name="SnapperTwean" type="Tween" parent="ConstructEditor"]
+[connection signal="body_entered" from="ConstructEditor/Snapper" to="ConstructEditor" method="_on_Snapper_body_entered"]
