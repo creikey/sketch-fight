@@ -14,7 +14,7 @@
 
 [sub_resource type="Animation" id=1]
 resource_name = "error"
-length = 1.5
+length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("BackgroundEditingPad:color")
 tracks/0/interp = 1
@@ -22,7 +22,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4, 1.5 ),
+"times": PoolRealArray( 0, 0.1, 0.4 ),
 "transitions": PoolRealArray( 0.233258, 2.07053, 1 ),
 "update": 0,
 "values": [ Color( 0, 0, 0, 0.0588235 ), Color( 1, 0, 0, 0.278431 ), Color( 0, 0, 0, 0.0588235 ) ]
@@ -34,7 +34,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3, 1.5 ),
+"times": PoolRealArray( 0, 0.1, 0.4 ),
 "transitions": PoolRealArray( 0.25, 0.203063, 1 ),
 "update": 0,
 "values": [ 1.0, -1.0, 1.0 ]
