@@ -1,9 +1,9 @@
 extends CanvasLayer
 
 const SAVE_SETTINGS_TIME = 1.0
+const settings_version = 1
 
 var cur_settings_save_time = 0.0
-
 
 func _ready():
 	load_settings()
@@ -22,9 +22,9 @@ func goto_main_menu():
 	$PanelContainer/VBoxContainer/HBoxContainer/StartServerButton.visible = false
 	$PanelContainer/VBoxContainer/UPNPButton.visible = false
 	Lobby.my_info["user_name"] = $PanelContainer/VBoxContainer/HBoxContainer2/Username.text
-	Lobby.my_info["color"] = $PanelContainer/VBoxContainer/HBoxContainer2/Panel/HBoxContainer/ColorPickerButton.color
+	Lobby.my_info["color"] = $PanelContainer/VBoxContainer/HBoxContainer2/Panel/ColorsHBoxContainer.color
 	$PanelContainer/VBoxContainer/UpdateHBoxContainer/NewUsername.text = Lobby.my_info["user_name"]
-	$PanelContainer/VBoxContainer/UpdateHBoxContainer/Panel/HBoxContainer/ColorPickerButton.color = Lobby.my_info["color"]
+	$PanelContainer/VBoxContainer/UpdateHBoxContainer/Panel/ColorsHBoxContainer.color = Lobby.my_info["color"]
 	$PanelContainer/VBoxContainer/UpdateHBoxContainer.visible = true
 	$PanelContainer/VBoxContainer/UPNPLog.visible = false
 	$PanelContainer/VBoxContainer/HBoxContainer4.visible = false
@@ -65,9 +65,10 @@ func _on_UPNPButton_pressed():
 func save_settings():
 	var settings_dict = {
 		"username": $PanelContainer/VBoxContainer/HBoxContainer2/Username.text,
-		"color": $PanelContainer/VBoxContainer/HBoxContainer2/Panel/HBoxContainer/ColorPickerButton.color,
+		"color": $PanelContainer/VBoxContainer/HBoxContainer2/Panel/ColorsHBoxContainer.color,
 		"port": $PanelContainer/VBoxContainer/Port.text,
-		"join_code": $PanelContainer/VBoxContainer/JoinCode.text
+		"join_code": $PanelContainer/VBoxContainer/JoinCode.text,
+		"settings_version": str(settings_version)
 	}
 	var json_settings = to_json(settings_dict)
 	var settings_file: File = File.new()
@@ -85,16 +86,20 @@ func load_settings():
 	settings_file.open("user://settings.json", File.READ)
 	var settings_dict = parse_json(settings_file.get_as_text())
 	if typeof(settings_dict) == TYPE_DICTIONARY:
-		$PanelContainer/VBoxContainer/HBoxContainer2/Username.text = settings_dict["username"]
-		var color_array = settings_dict["color"].split(",")
-		var resultant_color = Color()
-		resultant_color.r = float(color_array[0])
-		resultant_color.g = float(color_array[1])
-		resultant_color.b = float(color_array[2])
-		resultant_color.a = float(color_array[3])
-		$PanelContainer/VBoxContainer/HBoxContainer2/Panel/HBoxContainer/ColorPickerButton.color = resultant_color
-		$PanelContainer/VBoxContainer/Port.text = settings_dict["port"]
-		$PanelContainer/VBoxContainer/JoinCode.text = settings_dict["join_code"]
+		if not settings_dict.has("settings_version") or settings_dict["settings_version"] != str(settings_version):
+			print("Warning: Cached settings out of date, current version: ", settings_version)
+			dir.remove("user://settings.json")
+		else:
+			$PanelContainer/VBoxContainer/HBoxContainer2/Username.text = settings_dict["username"]
+			var color_array = settings_dict["color"].split(",")
+			var resultant_color = Color()
+			resultant_color.r = float(color_array[0])
+			resultant_color.g = float(color_array[1])
+			resultant_color.b = float(color_array[2])
+			resultant_color.a = float(color_array[3])
+			$PanelContainer/VBoxContainer/HBoxContainer2/Panel/ColorsHBoxContainer.color = resultant_color
+			$PanelContainer/VBoxContainer/Port.text = settings_dict["port"]
+			$PanelContainer/VBoxContainer/JoinCode.text = settings_dict["join_code"]
 	else:
 		printerr("Wrong type from loaded settings file. Expected dict, type is: ", typeof(settings_dict))
 		dir.remove("user://settings.json")

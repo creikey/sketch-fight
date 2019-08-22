@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://UI.gd" type="Script" id=1]
-[ext_resource path="res://UpdateHBoxContainer.gd" type="Script" id=2]
-[ext_resource path="res://PlayerLog.gd" type="Script" id=3]
-[ext_resource path="res://DefaultPlayerLog.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ColorsHBoxContainer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UpdateHBoxContainer.gd" type="Script" id=3]
+[ext_resource path="res://PlayerLog.gd" type="Script" id=4]
+[ext_resource path="res://DefaultPlayerLog.tscn" type="PackedScene" id=5]
 
 [sub_resource type="ButtonGroup" id=1]
 
@@ -48,44 +49,27 @@ group = SubResource( 1 )
 text = "server"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
-editor/display_folded = true
 margin_top = 28.0
 margin_right = 1906.0
-margin_bottom = 62.0
+margin_bottom = 80.0
 
 [node name="Username" type="LineEdit" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2"]
-margin_right = 1808.0
-margin_bottom = 34.0
+margin_right = 1664.0
+margin_bottom = 52.0
 size_flags_horizontal = 3
 placeholder_text = "username"
 
 [node name="Panel" type="PanelContainer" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 1812.0
+margin_left = 1668.0
 margin_right = 1906.0
-margin_bottom = 34.0
+margin_bottom = 52.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2/Panel"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 87.0
-margin_bottom = 27.0
-
-[node name="Label" type="Label" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2/Panel/HBoxContainer"]
-margin_top = 3.0
-margin_right = 32.0
-margin_bottom = 17.0
-text = "color"
-
-[node name="ColorPickerButton" type="ColorPickerButton" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2/Panel/HBoxContainer"]
-margin_left = 36.0
-margin_right = 80.0
-margin_bottom = 20.0
-text = "color"
+[node name="ColorsHBoxContainer" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2/Panel" instance=ExtResource( 2 )]
 
 [node name="Port" type="LineEdit" parent="UI/PanelContainer/VBoxContainer"]
-margin_top = 66.0
+margin_top = 84.0
 margin_right = 1906.0
-margin_bottom = 90.0
+margin_bottom = 108.0
 placeholder_text = "port"
 
 [node name="JoinCode" type="LineEdit" parent="UI/PanelContainer/VBoxContainer"]
@@ -96,9 +80,9 @@ margin_bottom = 118.0
 placeholder_text = "join code"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
-margin_top = 94.0
+margin_top = 112.0
 margin_right = 1906.0
-margin_bottom = 114.0
+margin_bottom = 132.0
 
 [node name="JoinServerButton" type="Button" parent="UI/PanelContainer/VBoxContainer/HBoxContainer"]
 visible = false
@@ -130,9 +114,9 @@ size_flags_horizontal = 3
 text = "Copy Join Code"
 
 [node name="UPNPButton" type="Button" parent="UI/PanelContainer/VBoxContainer"]
-margin_top = 118.0
+margin_top = 136.0
 margin_right = 1906.0
-margin_bottom = 138.0
+margin_bottom = 156.0
 text = "Forward UPNP Port ( for server )"
 
 [node name="UPNPLog" type="Label" parent="UI/PanelContainer/VBoxContainer"]
@@ -147,55 +131,39 @@ __meta__ = {
 
 [node name="UpdateHBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
 visible = false
-margin_top = 118.0
-margin_right = 1024.0
-margin_bottom = 152.0
-script = ExtResource( 2 )
+margin_top = 160.0
+margin_right = 1906.0
+margin_bottom = 212.0
+script = ExtResource( 3 )
 
 [node name="NewUsername" type="LineEdit" parent="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer"]
-margin_right = 836.0
-margin_bottom = 34.0
+margin_right = 1604.0
+margin_bottom = 52.0
 size_flags_horizontal = 3
 placeholder_text = "new username"
 
 [node name="Panel" type="PanelContainer" parent="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer"]
-margin_left = 840.0
-margin_right = 964.0
-margin_bottom = 34.0
+margin_left = 1608.0
+margin_right = 1846.0
+margin_bottom = 52.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer/Panel"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 117.0
-margin_bottom = 27.0
-
-[node name="Label" type="Label" parent="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer/Panel/HBoxContainer"]
-margin_top = 3.0
-margin_right = 62.0
-margin_bottom = 17.0
-text = "new color"
-
-[node name="ColorPickerButton" type="ColorPickerButton" parent="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer/Panel/HBoxContainer"]
-margin_left = 66.0
-margin_right = 110.0
-margin_bottom = 20.0
-text = "color"
+[node name="ColorsHBoxContainer" parent="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer/Panel" instance=ExtResource( 2 )]
 
 [node name="UpdateButton" type="Button" parent="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer"]
-margin_left = 968.0
-margin_right = 1024.0
-margin_bottom = 34.0
+margin_left = 1850.0
+margin_right = 1906.0
+margin_bottom = 52.0
 text = "update"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
-margin_top = 142.0
+margin_top = 160.0
 margin_right = 1906.0
 margin_bottom = 1066.0
 size_flags_vertical = 3
 
 [node name="LeftSpacer" type="PanelContainer" parent="UI/PanelContainer/VBoxContainer/HBoxContainer3"]
 margin_right = 632.0
-margin_bottom = 924.0
+margin_bottom = 906.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 2 )
@@ -203,16 +171,16 @@ custom_styles/panel = SubResource( 2 )
 [node name="PlayerLog" type="VBoxContainer" parent="UI/PanelContainer/VBoxContainer/HBoxContainer3"]
 margin_left = 636.0
 margin_right = 1268.0
-margin_bottom = 924.0
+margin_bottom = 906.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 3 )
-player_log_pack = ExtResource( 4 )
+script = ExtResource( 4 )
+player_log_pack = ExtResource( 5 )
 
 [node name="RightSpacer" type="PanelContainer" parent="UI/PanelContainer/VBoxContainer/HBoxContainer3"]
 margin_left = 1272.0
 margin_right = 1906.0
-margin_bottom = 924.0
+margin_bottom = 906.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 2 )
