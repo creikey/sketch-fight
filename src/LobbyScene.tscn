@@ -91,6 +91,13 @@ margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "join server"
 
+[node name="JoiningLabel" type="Label" parent="UI/PanelContainer/VBoxContainer/HBoxContainer"]
+visible = false
+margin_top = 3.0
+margin_right = 54.0
+margin_bottom = 17.0
+text = "Joining..."
+
 [node name="StartServerButton" type="Button" parent="UI/PanelContainer/VBoxContainer/HBoxContainer"]
 margin_right = 1906.0
 margin_bottom = 20.0
@@ -156,6 +163,7 @@ margin_bottom = 52.0
 text = "update"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
+visible = false
 margin_top = 160.0
 margin_right = 1906.0
 margin_bottom = 1066.0

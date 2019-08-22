@@ -28,13 +28,14 @@ func goto_main_menu():
 	$PanelContainer/VBoxContainer/UpdateHBoxContainer.visible = true
 	$PanelContainer/VBoxContainer/UPNPLog.visible = false
 	$PanelContainer/VBoxContainer/HBoxContainer4.visible = false
+	$PanelContainer/VBoxContainer/HBoxContainer/JoiningLabel.visible = false
+	$PanelContainer/VBoxContainer/HBoxContainer3.visible = true
 
 func _on_JoinServerButton_pressed():
-	goto_main_menu()
+	$PanelContainer/VBoxContainer/HBoxContainer/JoiningLabel.visible = true
 	var target_dict = parse_json(Marshalls.base64_to_utf8($PanelContainer/VBoxContainer/JoinCode.text))
 	if typeof(target_dict) != TYPE_DICTIONARY or not target_dict.has("ip") or not target_dict.has("port"):
 		printerr("Incorrectly formatted join code")
-	# print(target_dict)
 	Lobby.join_server(int(target_dict["port"]), target_dict["ip"])
 	Lobby.emit_signal("update_lobby", Lobby.player_info, Lobby.my_info)
 

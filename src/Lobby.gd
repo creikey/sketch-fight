@@ -68,7 +68,6 @@ func join_server(port, ip):
 	get_tree().set_network_peer(peer)
 
 
-
 func _on_tree_exiting():
 	if upnp != null:
 # warning-ignore:return_value_discarded
@@ -91,6 +90,7 @@ func _player_disconnected(id):
 
 func _connected_ok():
 	# Only called on clients, not server.
+	get_node("/root/LobbyScene/UI").goto_main_menu()
 	print("connected ok")
 
 func _server_disconnected():
