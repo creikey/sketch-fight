@@ -14,6 +14,10 @@ func _process(delta):
 		save_settings()
 		cur_settings_save_time = 0.0
 
+func update_my_info():
+	Lobby.my_info["user_name"] = $PanelContainer/VBoxContainer/HBoxContainer2/Username.text
+	Lobby.my_info["color"] = $PanelContainer/VBoxContainer/HBoxContainer2/Panel/ColorsHBoxContainer.color
+
 func goto_main_menu():
 	$PanelContainer/VBoxContainer/HBoxContainer2.visible = false
 	$PanelContainer/VBoxContainer/Port.visible = false
@@ -21,8 +25,6 @@ func goto_main_menu():
 	$PanelContainer/VBoxContainer/HBoxContainer/JoinServerButton.visible = false
 	$PanelContainer/VBoxContainer/HBoxContainer/StartServerButton.visible = false
 	$PanelContainer/VBoxContainer/UPNPButton.visible = false
-	Lobby.my_info["user_name"] = $PanelContainer/VBoxContainer/HBoxContainer2/Username.text
-	Lobby.my_info["color"] = $PanelContainer/VBoxContainer/HBoxContainer2/Panel/ColorsHBoxContainer.color
 	$PanelContainer/VBoxContainer/UpdateHBoxContainer/NewUsername.text = Lobby.my_info["user_name"]
 	$PanelContainer/VBoxContainer/UpdateHBoxContainer/Panel/ColorsHBoxContainer.color = Lobby.my_info["color"]
 	$PanelContainer/VBoxContainer/UpdateHBoxContainer.visible = true
@@ -33,6 +35,8 @@ func goto_main_menu():
 
 func _on_JoinServerButton_pressed():
 	$PanelContainer/VBoxContainer/HBoxContainer/JoiningLabel.visible = true
+	$PanelContainer/VBoxContainer/HBoxContainer4.visible = false
+	update_my_info()
 	var target_dict = parse_json(Marshalls.base64_to_utf8($PanelContainer/VBoxContainer/JoinCode.text))
 	if typeof(target_dict) != TYPE_DICTIONARY or not target_dict.has("ip") or not target_dict.has("port"):
 		printerr("Incorrectly formatted join code")

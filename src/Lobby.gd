@@ -76,6 +76,7 @@ func _on_tree_exiting():
 func _player_connected(id):
 	var my_id = get_tree().get_network_unique_id()
 	# tell new player about myself
+	print("Relaying my info ", my_info)
 	rpc_id(id, "register_player", my_id, my_info)
 	emit_signal("update_lobby", player_info, my_info)
 
@@ -105,6 +106,7 @@ func _connected_fail():
 	pass # Could not even connect to server; abort.
 
 remote func register_player(id, info):
+	print("Registering player ", info)
 	# Store the info
 	player_info[id] = info
 	# Call function to update lobby UI here
