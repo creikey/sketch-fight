@@ -4,7 +4,7 @@
 [ext_resource path="res://blue-color.png" type="Texture" id=2]
 [ext_resource path="res://yellow-color.png" type="Texture" id=3]
 [ext_resource path="res://orange-color.png" type="Texture" id=4]
-[ext_resource path="res://red-color.png" type="Texture" id=5]
+[ext_resource path="res://green-color.png" type="Texture" id=5]
 
 [node name="ColorsHBoxContainer" type="HBoxContainer"]
 margin_left = 7.0
@@ -37,7 +37,7 @@ margin_right = 176.0
 margin_bottom = 38.0
 icon = ExtResource( 4 )
 
-[node name="RedButton" type="Button" parent="."]
+[node name="GreenButton" type="Button" parent="."]
 margin_left = 180.0
 margin_right = 224.0
 margin_bottom = 38.0
@@ -45,4 +45,4 @@ icon = ExtResource( 5 )
 [connection signal="pressed" from="BlueButton" to="." method="_on_BlueButton_pressed"]
 [connection signal="pressed" from="YellowButton" to="." method="_on_YellowButton_pressed"]
 [connection signal="pressed" from="OrangeButton" to="." method="_on_OrangeButton_pressed"]
-[connection signal="pressed" from="RedButton" to="." method="_on_RedButton_pressed"]
+[connection signal="pressed" from="GreenButton" to="." method="_on_GreenButton_pressed"]

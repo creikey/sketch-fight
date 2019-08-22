@@ -16,8 +16,8 @@ func _on_YellowButton_pressed():
 func _on_OrangeButton_pressed():
 	self.color = Color("F9B799")
 
-func _on_RedButton_pressed():
-	self.color = Color("FFEDE1")
+func _on_GreenButton_pressed():
+	self.color = Color("B7F7BF")
 
 func set_color(new_color):
 	color = new_color
