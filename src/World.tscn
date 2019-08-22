@@ -6,7 +6,7 @@
 [ext_resource path="res://ResourceBlock.tscn" type="PackedScene" id=4]
 [ext_resource path="res://CameraTarget.gd" type="Script" id=5]
 [ext_resource path="res://points-1.png" type="Texture" id=6]
-[ext_resource path="res://ShipEditor.gd" type="Script" id=7]
+[ext_resource path="res://ConstructEditor.gd" type="Script" id=7]
 [ext_resource path="res://Ship.tscn" type="PackedScene" id=8]
 [ext_resource path="res://EditingShip.tscn" type="PackedScene" id=9]
 [ext_resource path="res://editing-line.svg" type="Texture" id=10]
@@ -69,19 +69,19 @@ region_rect = Rect2( 0, 0, 15360, 8640 )
 
 [node name="Ships" type="Node2D" parent="."]
 
-[node name="ShipEditor" type="Node2D" parent="."]
+[node name="ConstructEditor" type="Node2D" parent="."]
 script = ExtResource( 7 )
 ship_pack = ExtResource( 8 )
 editing_ship_pack = ExtResource( 9 )
 
-[node name="ConveyorBelt" type="Sprite" parent="ShipEditor"]
+[node name="ConveyorBelt" type="Sprite" parent="ConstructEditor"]
 modulate = Color( 0, 0, 0, 0.133333 )
 texture = ExtResource( 10 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 600, 600 )
 script = ExtResource( 11 )
 
-[node name="BackgroundEditingPad" type="ColorRect" parent="ShipEditor"]
+[node name="BackgroundEditingPad" type="ColorRect" parent="ConstructEditor"]
 margin_left = -350.0
 margin_top = -350.0
 margin_right = 350.0
