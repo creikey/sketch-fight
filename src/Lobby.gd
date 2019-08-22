@@ -83,6 +83,8 @@ func _player_connected(id):
 func _player_disconnected(id):
 	player_info.erase(id) # Erase player from info.
 	player_resources.erase(id)
+	if get_node("/root").has_node("World"):
+		get_node("/root/World/Ships/" + str(id)).queue_free()
 	emit_signal("update_resources")
 	emit_signal("update_lobby", player_info, my_info)
 
