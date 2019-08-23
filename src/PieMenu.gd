@@ -25,7 +25,7 @@ func _ready():
 		show()
 		set_process(true)
 
-func _process(delta):
+func _process(_delta):
 	if visible:
 		update()
 

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://PieMenu.gd" type="Script" id=1]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "hide"
 length = 0.7
 tracks/0/type = "value"
@@ -30,8 +30,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "show"
+[sub_resource type="Animation" id=2]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:button_distance")
 tracks/0/interp = 1
@@ -58,7 +57,6 @@ tracks/1/keys = {
 }
 
 [node name="PieMenu" type="Control"]
-modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 933.441
@@ -66,7 +64,6 @@ margin_top = 475.993
 margin_right = 933.441
 margin_bottom = 475.993
 script = ExtResource( 1 )
-button_distance = 0.0
 center_thickness = 11.59
 center_size = 20.0
 center_color = Color( 0.270588, 0.270588, 0.270588, 1 )
@@ -85,35 +82,7 @@ text = "test"
 align = 1
 autowrap = true
 
-[node name="Button" type="Button" parent="."]
-margin_left = -33.5
-margin_top = -10.0
-margin_right = 33.5
-margin_bottom = 10.0
-text = "Button 1"
-
-[node name="Button2" type="Button" parent="."]
-margin_left = -33.5001
-margin_top = -10.0
-margin_right = 33.5001
-margin_bottom = 10.0
-text = "Button 2"
-
-[node name="Button3" type="Button" parent="."]
-margin_left = -33.5
-margin_top = -10.0
-margin_right = 33.5
-margin_bottom = 10.0
-text = "Button 3"
-
-[node name="Button4" type="Button" parent="."]
-margin_left = -33.5
-margin_top = -10.0
-margin_right = 33.5
-margin_bottom = 10.0
-text = "Button 4"
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/hide = SubResource( 2 )
-anims/show = SubResource( 1 )
+anims/hide = SubResource( 1 )
+anims/show = SubResource( 2 )
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
