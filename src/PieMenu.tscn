@@ -6,7 +6,7 @@
 resource_name = "hide"
 length = 0.7
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:button_distance")
+tracks/0/path = NodePath(".:control_distance")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -32,7 +32,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=2]
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:button_distance")
+tracks/0/path = NodePath(".:control_distance")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
