@@ -5,8 +5,9 @@
 [node name="LifeBar" type="ProgressBar"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_scale = Vector2( 0.192881, 0.0325973 )
-value = 100.0
+margin_right = -1620.0
+margin_bottom = -1030.0
+value = 71.93
 percent_visible = false
 script = ExtResource( 1 )
 
