@@ -28,15 +28,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="245.06073"
-     inkscape:cy="288.80606"
+     inkscape:zoom="0.7"
+     inkscape:cx="273.55853"
+     inkscape:cy="178.18272"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1914"
+     inkscape:window-width="954"
      inkscape:window-height="1026"
-     inkscape:window-x="3840"
+     inkscape:window-x="4800"
      inkscape:window-y="24"
      inkscape:window-maximized="0"
      units="px"
@@ -57,7 +57,7 @@
      inkscape:snap-page="true"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:snap-global="false">
+     inkscape:snap-global="true">
     <sodipodi:guide
        position="66.145836,132.29166"
        orientation="1,0"
@@ -107,21 +107,23 @@
        id="rect1389"
        width="50.648819"
        height="87.690483"
-       x="40.821426"
-       y="187.00891"
+       x="205.52974"
+       y="-109.99108"
        inkscape:export-xdpi="6.1439996"
        inkscape:export-ydpi="6.1439996"
-       inkscape:label="base" />
+       inkscape:label="base"
+       transform="rotate(90)" />
     <rect
-       y="187.00891"
-       x="56.696426"
+       y="-109.99108"
+       x="221.40474"
        height="63.877983"
        width="18.898821"
        id="rect1399"
        style="display:inline;opacity:1;fill:#fb4747;fill-opacity:1;stroke:none;stroke-width:1.04235148;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
        inkscape:export-xdpi="6.1439996"
        inkscape:export-ydpi="6.1439996"
-       inkscape:label="barrel" />
+       inkscape:label="barrel"
+       transform="rotate(90)" />
     <rect
        inkscape:label="laser"
        inkscape:export-ydpi="6.1439996"
@@ -130,7 +132,8 @@
        id="rect1401"
        width="8.6934643"
        height="52.727684"
-       x="61.799107"
-       y="187.00891" />
+       x="226.50742"
+       y="-98.840782"
+       transform="rotate(90)" />
   </g>
 </svg>
