@@ -23,92 +23,105 @@ script = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1913.0
-margin_bottom = 1073.0
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+custom_constants/margin_right = 50
+custom_constants/margin_top = 50
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer"]
+editor/display_folded = true
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 1870.0
+margin_bottom = 1030.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
-margin_right = 1906.0
+[node name="HBoxContainer4" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_right = 1820.0
 margin_bottom = 24.0
 
-[node name="ClientCheckBox" type="CheckBox" parent="UI/PanelContainer/VBoxContainer/HBoxContainer4"]
-margin_right = 951.0
+[node name="ClientCheckBox" type="CheckBox" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+margin_right = 908.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 group = SubResource( 1 )
 text = "client"
 
-[node name="ServerCheckBox" type="CheckBox" parent="UI/PanelContainer/VBoxContainer/HBoxContainer4"]
-margin_left = 955.0
-margin_right = 1906.0
+[node name="ServerCheckBox" type="CheckBox" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+margin_left = 912.0
+margin_right = 1820.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 pressed = true
 group = SubResource( 1 )
 text = "server"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 28.0
-margin_right = 1906.0
-margin_bottom = 80.0
+margin_right = 1820.0
+margin_bottom = 68.0
 
-[node name="Username" type="LineEdit" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2"]
-margin_right = 1664.0
-margin_bottom = 52.0
+[node name="Username" type="LineEdit" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 1584.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
 placeholder_text = "username"
 
-[node name="Panel" type="PanelContainer" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 1668.0
-margin_right = 1906.0
-margin_bottom = 52.0
+[node name="Panel" type="PanelContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 1588.0
+margin_right = 1820.0
+margin_bottom = 40.0
 
-[node name="ColorsHBoxContainer" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2/Panel" instance=ExtResource( 2 )]
+[node name="ColorsHBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/Panel" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 232.0
+margin_bottom = 40.0
 
-[node name="Port" type="LineEdit" parent="UI/PanelContainer/VBoxContainer"]
-margin_top = 84.0
-margin_right = 1906.0
-margin_bottom = 108.0
+[node name="Port" type="LineEdit" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 1820.0
+margin_bottom = 94.0
 placeholder_text = "port"
 
-[node name="JoinCode" type="LineEdit" parent="UI/PanelContainer/VBoxContainer"]
+[node name="JoinCode" type="LineEdit" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
 visible = false
 margin_top = 94.0
 margin_right = 1920.0
 margin_bottom = 118.0
 placeholder_text = "join code"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
-margin_top = 112.0
-margin_right = 1906.0
-margin_bottom = 132.0
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 98.0
+margin_right = 1820.0
+margin_bottom = 120.0
 
-[node name="JoinServerButton" type="Button" parent="UI/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="JoinServerButton" type="Button" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 visible = false
 margin_right = 958.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "join server"
 
-[node name="JoiningLabel" type="Label" parent="UI/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="JoiningLabel" type="Label" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 visible = false
 margin_top = 3.0
 margin_right = 54.0
 margin_bottom = 17.0
 text = "Joining..."
 
-[node name="StartServerButton" type="Button" parent="UI/PanelContainer/VBoxContainer/HBoxContainer"]
-margin_right = 1906.0
-margin_bottom = 20.0
+[node name="StartServerButton" type="Button" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 1820.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 text = "start server"
 
-[node name="StartGameButton" type="Button" parent="UI/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="StartGameButton" type="Button" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 visible = false
 margin_left = 684.0
 margin_right = 1024.0
@@ -116,7 +129,7 @@ margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "start game"
 
-[node name="CopyJoinCodeButton" type="Button" parent="UI/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="CopyJoinCodeButton" type="Button" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 visible = false
 margin_left = 1282.0
 margin_right = 1920.0
@@ -124,13 +137,13 @@ margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Copy Join Code"
 
-[node name="UPNPButton" type="Button" parent="UI/PanelContainer/VBoxContainer"]
-margin_top = 136.0
-margin_right = 1906.0
-margin_bottom = 156.0
+[node name="UPNPButton" type="Button" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 124.0
+margin_right = 1820.0
+margin_bottom = 146.0
 text = "Forward UPNP Port ( for server )"
 
-[node name="UPNPLog" type="Label" parent="UI/PanelContainer/VBoxContainer"]
+[node name="UPNPLog" type="Label" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
 visible = false
 margin_top = 142.0
 margin_right = 1024.0
@@ -140,47 +153,47 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="UpdateHBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
+[node name="UpdateHBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
 visible = false
 margin_top = 160.0
 margin_right = 1906.0
 margin_bottom = 212.0
 script = ExtResource( 3 )
 
-[node name="NewUsername" type="LineEdit" parent="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer"]
+[node name="NewUsername" type="LineEdit" parent="UI/PanelContainer/MarginContainer/VBoxContainer/UpdateHBoxContainer"]
 margin_right = 1604.0
 margin_bottom = 52.0
 size_flags_horizontal = 3
 placeholder_text = "new username"
 
-[node name="Panel" type="PanelContainer" parent="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer"]
+[node name="Panel" type="PanelContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/UpdateHBoxContainer"]
 margin_left = 1608.0
 margin_right = 1846.0
 margin_bottom = 52.0
 
-[node name="ColorsHBoxContainer" parent="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer/Panel" instance=ExtResource( 2 )]
+[node name="ColorsHBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/UpdateHBoxContainer/Panel" instance=ExtResource( 2 )]
 
-[node name="UpdateButton" type="Button" parent="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer"]
+[node name="UpdateButton" type="Button" parent="UI/PanelContainer/MarginContainer/VBoxContainer/UpdateHBoxContainer"]
 margin_left = 1850.0
 margin_right = 1906.0
 margin_bottom = 52.0
 text = "update"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
 visible = false
 margin_top = 160.0
 margin_right = 1906.0
 margin_bottom = 1066.0
 size_flags_vertical = 3
 
-[node name="LeftSpacer" type="PanelContainer" parent="UI/PanelContainer/VBoxContainer/HBoxContainer3"]
+[node name="LeftSpacer" type="PanelContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
 margin_right = 632.0
 margin_bottom = 906.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 2 )
 
-[node name="PlayerLog" type="VBoxContainer" parent="UI/PanelContainer/VBoxContainer/HBoxContainer3"]
+[node name="PlayerLog" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
 margin_left = 636.0
 margin_right = 1268.0
 margin_bottom = 906.0
@@ -189,7 +202,7 @@ size_flags_vertical = 3
 script = ExtResource( 4 )
 player_log_pack = ExtResource( 5 )
 
-[node name="RightSpacer" type="PanelContainer" parent="UI/PanelContainer/VBoxContainer/HBoxContainer3"]
+[node name="RightSpacer" type="PanelContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
 margin_left = 1272.0
 margin_right = 1906.0
 margin_bottom = 906.0
@@ -197,11 +210,11 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 2 )
 [connection signal="tree_exiting" from="UI" to="UI" method="_on_UI_tree_exiting"]
-[connection signal="pressed" from="UI/PanelContainer/VBoxContainer/HBoxContainer4/ClientCheckBox" to="UI" method="_on_ClientCheckBox_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/VBoxContainer/HBoxContainer4/ServerCheckBox" to="UI" method="_on_ServerCheckBox_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/VBoxContainer/HBoxContainer/JoinServerButton" to="UI" method="_on_JoinServerButton_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/VBoxContainer/HBoxContainer/StartServerButton" to="UI" method="_on_StartServerButton_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/VBoxContainer/HBoxContainer/StartGameButton" to="UI" method="_on_StartGameButton_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/VBoxContainer/HBoxContainer/CopyJoinCodeButton" to="UI" method="_on_CopyJoinCodeButton_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/VBoxContainer/UPNPButton" to="UI" method="_on_UPNPButton_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer/UpdateButton" to="UI/PanelContainer/VBoxContainer/UpdateHBoxContainer" method="_on_UpdateButton_pressed"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/ClientCheckBox" to="UI" method="_on_ClientCheckBox_pressed"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/ServerCheckBox" to="UI" method="_on_ServerCheckBox_pressed"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/JoinServerButton" to="UI" method="_on_JoinServerButton_pressed"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/StartServerButton" to="UI" method="_on_StartServerButton_pressed"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/StartGameButton" to="UI" method="_on_StartGameButton_pressed"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CopyJoinCodeButton" to="UI" method="_on_CopyJoinCodeButton_pressed"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/VBoxContainer/UPNPButton" to="UI" method="_on_UPNPButton_pressed"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/VBoxContainer/UpdateHBoxContainer/UpdateButton" to="UI/PanelContainer/MarginContainer/VBoxContainer/UpdateHBoxContainer" method="_on_UpdateButton_pressed"]

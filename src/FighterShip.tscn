@@ -48,7 +48,6 @@ margin_bottom = -47.0
 [node name="LifeBar" parent="." instance=ExtResource( 6 )]
 margin_right = 340.0
 margin_bottom = 34.0
-value = 83.69
 
 [node name="Position2D" type="Position2D" parent="LifeBar"]
 position = Vector2( 0, 150 )

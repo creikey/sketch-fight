@@ -66,6 +66,7 @@ func update_ship():
 	var cur_ship = load(EditingShip.ships_path + ship_type + ".tscn").instance()
 	add_child(cur_ship)
 	cur_ship.set_network_master(get_network_master())
+	cur_ship.get_node("LifeBar").life = 100.0
 
 func setup_from_args(args: Array):
 	global_position = args[0]
@@ -76,5 +77,9 @@ func setup_from_args(args: Array):
 	get_node(ship_type).setup_from_one_arg(args[3])
 	team = args[4]
 
+func dead():
+	queue_free()
+
 func hit(damage: float):
-	print("Damage ", damage)
+	if has_node(ship_type):
+		get_node(ship_type).get_node("LifeBar").change_health(-damage)
