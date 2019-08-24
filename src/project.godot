@@ -9,31 +9,73 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "AbstractMethods",
+"language": "GDScript",
+"path": "res://AbstractMethods.gd"
+}, {
 "base": "Node2D",
 "class": "ConstructEditor",
 "language": "GDScript",
 "path": "res://ConstructEditor.gd"
+}, {
+"base": "ModuleSlot",
+"class": "EditingModuleSlot",
+"language": "GDScript",
+"path": "res://EditingModuleSlot.gd"
 }, {
 "base": "Node2D",
 "class": "EditingShip",
 "language": "GDScript",
 "path": "res://EditingShip.gd"
 }, {
+"base": "Node2D",
+"class": "Module",
+"language": "GDScript",
+"path": "res://Module.gd"
+}, {
+"base": "TextureRect",
+"class": "ModuleSlot",
+"language": "GDScript",
+"path": "res://ModuleSlot.gd"
+}, {
 "base": "RigidBody2D",
 "class": "NetworkedRigidBody",
 "language": "GDScript",
 "path": "res://NetworkedRigidBody2D.gd"
 }, {
+"base": "Button",
+"class": "NewModuleButton",
+"language": "GDScript",
+"path": "res://NewModuleButton.gd"
+}, {
+"base": "Control",
+"class": "PieMenu",
+"language": "GDScript",
+"path": "res://PieMenu.gd"
+}, {
 "base": "RigidBody2D",
 "class": "Ship",
 "language": "GDScript",
 "path": "res://Ship.gd"
+}, {
+"base": "CollisionPolygon2D",
+"class": "ShipModules",
+"language": "GDScript",
+"path": "res://ShipModules.gd"
 } ]
 _global_script_class_icons={
+"AbstractMethods": "",
 "ConstructEditor": "",
+"EditingModuleSlot": "",
 "EditingShip": "",
+"Module": "",
+"ModuleSlot": "",
 "NetworkedRigidBody": "",
-"Ship": ""
+"NewModuleButton": "",
+"PieMenu": "",
+"Ship": "",
+"ShipModules": ""
 }
 
 [application]
@@ -50,7 +92,6 @@ Lobby="*res://Lobby.gd"
 
 window/size/width=1920
 window/size/height=1080
-window/size/borderless=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
@@ -136,6 +177,16 @@ g_new_ship={
 g_enter_ship={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777221,"unicode":0,"echo":false,"script":null)
+ ]
+}
+g_place_module={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+ui_click={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
 

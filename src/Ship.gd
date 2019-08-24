@@ -69,3 +69,6 @@ func setup_from_args(args: Array):
 	ship_type = args[1]
 	update_ship()
 	get_node(ship_type).get_node("Sprite").modulate = args[2]
+
+func hit(damage: float):
+	print("Damage ", damage)

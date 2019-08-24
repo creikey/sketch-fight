@@ -37,6 +37,7 @@ func _input(event):
 			show_build_error()
 			return
 		# creating the construct
+		$Snapper/CollisionShape2D.disabled = true
 		match construct_type:
 			CONSTRUCT_TYPE.ship:
 				cur_construct = editing_ship_pack.instance()
@@ -53,6 +54,7 @@ func _input(event):
 		if not cur_construct:
 			return
 		# placing construct in world
+		$Snapper/CollisionShape2D.disabled = true
 		match construct_type:
 			CONSTRUCT_TYPE.ship:
 				Lobby.transmit_object("Ship", ship_pack.resource_path, [cur_construct.global_position, "FighterShip", Lobby.my_info["color"]])

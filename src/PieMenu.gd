@@ -1,6 +1,8 @@
 tool
 extends Control
 
+class_name PieMenu
+
 signal option_chosen(name_of_option)
 
 # All children must be controls
@@ -13,6 +15,7 @@ export var target_color = Color()
 export var center_resolution = 32
 export var label_text = "test" setget set_label_text
 export var text_distance = 100 setget set_text_distance
+export var delete_on_hide = false
 
 var cur_control: Control = null
 
@@ -20,7 +23,7 @@ func _ready():
 	if not Engine.editor_hint:
 		set_process(false)
 		visible = false
-		show()
+#		show()
 	else:
 		show()
 		set_process(true)
@@ -32,7 +35,7 @@ func _process(_delta):
 func _input(event):
 	if event is InputEventMouseMotion:
 		update()
-	elif event.is_action("ui_click") and cur_control != null:
+	elif event.is_action_pressed("ui_click") and cur_control != null:
 		emit_signal("option_chosen", cur_control.name)
 		hide()
 	if cur_control != null:
@@ -106,3 +109,5 @@ func set_control_distance(new_control_distance):
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "hide":
 		visible = false
+		if delete_on_hide:
+			queue_free()

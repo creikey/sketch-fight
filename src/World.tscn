@@ -63,6 +63,8 @@ margin_bottom = 7.0
 script = ExtResource( 1 )
 player_and_score_pack = ExtResource( 2 )
 
+[node name="Lasers" type="Node2D" parent="."]
+
 [node name="Players" type="Node2D" parent="."]
 
 [node name="Environment" type="Node2D" parent="."]
