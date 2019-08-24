@@ -90,5 +90,5 @@ func _on_Snapper_body_entered(body):
 	if body.is_in_group("constructable"):
 		construct_type = body.construct_type
 		$SnapperTwean.stop_all()
-		$SnapperTwean.interpolate_property(self, "rect_position", rect_position, body.global_position, 0.5, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+		$SnapperTwean.interpolate_property(self, "rect_position", rect_position, body.global_position - rect_size/2, 0.5, Tween.TRANS_CUBIC, Tween.EASE_OUT)
 		$SnapperTwean.start()
