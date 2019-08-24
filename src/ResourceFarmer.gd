@@ -19,6 +19,12 @@ func _on_GenerationTimer_timeout():
 func _on_ResourceFarmer_body_entered(body):
 	if body.is_in_group("ships") and not editing:
 		self.number_of_ships += 1
+	elif body is Laser:
+		hit(body.damage)
+		body.queue_free()
+
+func hit(damage: float):
+	pass
 
 func _on_ResourceFarmer_body_exited(body):
 	if body.is_in_group("ships") and not editing:
