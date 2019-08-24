@@ -18,6 +18,7 @@ export var text_distance = 100 setget set_text_distance
 export var delete_on_hide = false
 
 var cur_control: Control = null
+var hiding = false
 
 func _ready():
 	if not Engine.editor_hint:
@@ -33,9 +34,12 @@ func _process(_delta):
 		update()
 
 func _input(event):
+	if hiding:
+		return
 	if event is InputEventMouseMotion:
 		update()
 	elif event.is_action_pressed("ui_click") and cur_control != null:
+		accept_event()
 		emit_signal("option_chosen", cur_control.name)
 		hide()
 	if cur_control != null:
@@ -90,6 +94,8 @@ func show():
 	$AnimationPlayer.play("show")
 
 func hide():
+	hiding = true
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	$AnimationPlayer.play("hide")
 
 func set_label_text(new_label_text):

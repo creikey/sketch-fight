@@ -13,3 +13,4 @@ physics_material_override = SubResource( 1 )
 linear_damp = 3.0
 angular_damp = 20.0
 script = ExtResource( 1 )
+turn_force = 75000.0
