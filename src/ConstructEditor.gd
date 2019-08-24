@@ -10,11 +10,16 @@ export (PackedScene) var editing_ship_pack
 export (PackedScene) var editing_resource_farmer_pack
 
 var editing = false
-var cur_construct: Node2D = null
+var cur_construct: Construct = null
 var construct_type: int = 0
+
+var resource_consumption = 0 setget set_resource_consumption
 
 func _ready():
 	visible = false
+
+func enough_resources():
+	return resource_consumption >= Lobby.player_resources[get_tree().get_network_unique_id()]
 
 func _input(event):
 	if event.is_action_pressed("g_open_editor"):
@@ -44,7 +49,7 @@ func _input(event):
 				if not cur_construct.can_place():
 					show_place_error()
 					return
-				Lobby.transmit_object("ResourceFarmer", resource_farmer_pack.resource_path, [cur_construct.global_position, Lobby.my_info["color"], get_tree().get_network_unique_id()])
+				Lobby.transmit_object("ResourceFarmer", resource_farmer_pack.resource_path, [cur_construct.global_position, Lobby.my_info["color"], get_tree().get_network_unique_id(), Lobby.my_info["team"]])
 			_:
 				printerr("Cannot transmit object: ", construct_type)
 				show_place_error()
@@ -74,7 +79,13 @@ func _gui_input(event):
 		cur_construct.modulate.a = 0.7
 		cur_construct.position = rect_size/2
 		add_child(cur_construct)
+		self.resource_consumption = cur_construct.my_get_resource_cost()
+# warning-ignore:return_value_discarded
+		cur_construct.connect("resource_cost_changed", self, "resource_cost_changed")
 	
+
+func resource_cost_changed(new_resource_cost):
+	self.resource_consumption = new_resource_cost
 
 func ensure_editing(node):
 	if node.get("editing") != null:
@@ -92,3 +103,11 @@ func _on_Snapper_body_entered(body):
 		$SnapperTwean.stop_all()
 		$SnapperTwean.interpolate_property(self, "rect_position", rect_position, body.global_position - rect_size/2, 0.5, Tween.TRANS_CUBIC, Tween.EASE_OUT)
 		$SnapperTwean.start()
+
+func set_resource_consumption(new_resource_consumption):
+	resource_consumption = new_resource_consumption
+	$PanelContainer/MarginContainer/HBoxContainer/ConsumptionLabel.text = str(new_resource_consumption)
+	if enough_resources():
+		$PanelContainer/MarginContainer/HBoxContainer/ConsumptionLabel.modulate = Color(1, 0, 0)
+	else:
+		$PanelContainer/MarginContainer/HBoxContainer/ConsumptionLabel.modulate = Color(1, 1, 1)

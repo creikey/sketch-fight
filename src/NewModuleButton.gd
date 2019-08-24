@@ -12,8 +12,8 @@ func set_module_type(module_type: String):
 		icon = null
 		text = ""
 		return
-	if not module_type in Module.module_paths.keys():
+	if not module_type in Module.module_data.keys():
 		printerr("Unknown module type: ", module_type)
 	name = module_type
-	icon = load(Module.module_paths[module_type][1])
+	icon = load(Module.module_data[module_type][1])
 	text = module_type.capitalize()

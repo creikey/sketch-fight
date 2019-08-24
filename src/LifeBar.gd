@@ -12,7 +12,7 @@ func _ready():
 	set_as_toplevel(true)
 	rect_size = before_rect_size
 
-func _process(delta):
+func _process(_delta):
 	rect_global_position = get_parent().global_position + position_offset
 
 func change_health(change_amount: float):
@@ -20,11 +20,9 @@ func change_health(change_amount: float):
 
 func set_life(new_life):
 	life = new_life
+	if life <= 0.001:
+		emit_signal("out_of_life")
 	$Tween.stop_all()
 	$Tween.interpolate_property(self, "value", value, new_life, 0.5, Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	$Tween.interpolate_property(self, "modulate:a", 1.0, 0.3, 1.5, Tween.TRANS_CUBIC, Tween.EASE_IN)
 	$Tween.start()
-
-func _on_Tween_tween_all_completed():
-	if not value >= 0.001:
-		emit_signal("out_of_life")

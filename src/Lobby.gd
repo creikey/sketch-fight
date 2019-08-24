@@ -3,6 +3,8 @@ extends Node
 signal update_lobby(player_info, my_info)
 signal update_resources
 
+const starting_resources = 200
+
 # Player info, associate ID to data
 var player_info = {}
 # sync different positions for each character
@@ -158,9 +160,9 @@ remotesync func preconfigure_game():
 #		get_node("/root/World/Players").add_child(cur_player)
 #		cur_start_position.x += 100
 	
-	player_resources[my_peer_id] = 0
+	player_resources[my_peer_id] = starting_resources
 	for p in player_info.keys():
-		player_resources[p] = 0
+		player_resources[p] = starting_resources
 	player_resource_timer.start()
 	get_node("/root/LobbyScene").queue_free()
 	if my_peer_id == 1:

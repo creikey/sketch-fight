@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends Construct
 # WILL NOT WORK AS TOOL SCRIPT, checks variable on ready
 
 class_name Ship
@@ -16,7 +16,7 @@ remote var update_properties = false
 remotesync var horizontal = 0
 remotesync var vertical = 0
 
-onready var typical_angular_drag = angular_damp
+onready var typical_angular_drag = self.angular_damp
 
 var network_master = false
 var ship_type = "FighterShip"
@@ -44,12 +44,12 @@ func _integrate_forces(state: Physics2DDirectBodyState):
 		state.linear_velocity = target_linear_velocity
 		state.angular_velocity = target_angular_velocity
 #	applied_force = Vector2(horizontal * move_force, vertical * move_force)
-	applied_force = Vector2(-vertical * move_force, 0).rotated(state.transform.get_rotation())
+	self.applied_force = Vector2(-vertical * move_force, 0).rotated(state.transform.get_rotation())
 	if horizontal == 0:
-		angular_damp = typical_angular_drag
+		self.angular_damp = typical_angular_drag
 	else:
-		angular_damp = -1
-	applied_torque = horizontal * turn_force
+		self.angular_damp = -1
+	self.applied_torque = horizontal * turn_force
 #	if Input.is_action_just_pressed("g_reset"):
 #		state.transform.origin = start_position
 

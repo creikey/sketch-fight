@@ -2,6 +2,8 @@ extends CollisionPolygon2D
 
 class_name ShipModules
 
+signal modules_changed(new_resource_cost)
+
 export (PackedScene) var editing_module_slot_pack
 export (PackedScene) var module_slot_pack
 
@@ -13,11 +15,11 @@ func _unhandled_input(event):
 		rpc("my_fire_modules")
 
 remote func my_fire_modules():
-	for m in get_modules():
+	for m in get_module_slots():
 		for c in m.get_children():
 			c.my_fire(get_parent().global_transform.get_rotation(), get_parent().global_transform.origin, get_parent().team, get_parent())
 
-func get_modules() -> Array:
+func get_module_slots() -> Array:
 	return $Modules.get_children()
 
 func to_editing_mode():
@@ -25,17 +27,28 @@ func to_editing_mode():
 	if modules_are_editing:
 		return
 	modules_are_editing = true
-	for c in get_modules():
-		var cur_editing_module: EditingModuleSlot = editing_module_slot_pack.instance()
-		copy_properties(c, cur_editing_module)
-		c.replace_by(cur_editing_module, false)
+	for c in get_module_slots():
+		var cur_editing_module_slot: EditingModuleSlot = editing_module_slot_pack.instance()
+		copy_properties(c, cur_editing_module_slot)
+# warning-ignore:return_value_discarded
+		cur_editing_module_slot.connect("module_changed", self, "_module_changed")
+		c.replace_by(cur_editing_module_slot, false)
+
+func _module_changed(_new_module_type):
+	var cur_resource_count = 0.0
+	for c in get_module_slots():
+#		print(c.module_type)
+		if c.module_type == "":
+			continue
+		cur_resource_count += Module.module_data[c.module_type][2]
+	emit_signal("modules_changed", cur_resource_count)
 
 func to_battle_mode():
 	disabled = false
 	if modules_are_editing == false:
 		return
 	modules_are_editing = false
-	for c in get_modules():
+	for c in get_module_slots():
 		var cur_battle_module: ModuleSlot = module_slot_pack.instance()
 		copy_properties(c, cur_battle_module)
 		c.replace_by(cur_battle_module, false)
@@ -55,7 +68,7 @@ func copy_properties(module_source: ModuleSlot, module_output: ModuleSlot):
 
 func get_arg() -> Dictionary:
 	var output = {}
-	for m in get_modules():
+	for m in get_module_slots():
 		output[m.name] = m.module_type
 	return output
 

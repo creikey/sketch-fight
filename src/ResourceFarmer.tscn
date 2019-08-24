@@ -1,12 +1,17 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ResourceFarmer.gd" type="Script" id=1]
 [ext_resource path="res://resource-farmer.png" type="Texture" id=2]
+[ext_resource path="res://LifeBar.tscn" type="PackedScene" id=3]
 
 [node name="ResourceFarmer" type="Area2D" groups=[
 "resource_farmers",
 ]]
+position = Vector2( 650, 570 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
@@ -19,6 +24,14 @@ autostart = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( 231.5, -74.2, 230.2, -70, 229.2, -70, 143.2, 197, -144, 197, -144, 192.6, -232.1, -77, -228, -77, -5, -239.5, -5, -240.8, -1.7, -242.5 )
+
+[node name="LifeBar" parent="." instance=ExtResource( 3 )]
+margin_right = 310.0
+margin_bottom = 40.0
+
+[node name="Position2D" type="Position2D" parent="LifeBar"]
+position = Vector2( 1, 248.003 )
 [connection signal="body_entered" from="." to="." method="_on_ResourceFarmer_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_ResourceFarmer_body_exited"]
 [connection signal="timeout" from="GenerationTimer" to="." method="_on_GenerationTimer_timeout"]
+[connection signal="out_of_life" from="LifeBar" to="." method="_on_LifeBar_out_of_life"]

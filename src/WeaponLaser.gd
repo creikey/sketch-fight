@@ -3,7 +3,7 @@ extends Module
 export (PackedScene) var laser_pack
 
 const laser_damage = 4.0
-const laser_speed = 3000.0
+const laser_speed = 4000.0
 
 # warning-ignore:unused_argument
 func my_target_click(in_target: Vector2):

@@ -56,10 +56,8 @@ margin_right = 64.0
 margin_bottom = 64.0
 
 [node name="PlayerResources" type="VBoxContainer" parent="UI/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 7.0
-margin_bottom = 7.0
+margin_right = 14.0
+margin_bottom = 14.0
 script = ExtResource( 1 )
 player_and_score_pack = ExtResource( 2 )
 
@@ -130,11 +128,48 @@ script = ExtResource( 12 )
 anims/error = SubResource( 1 )
 
 [node name="Snapper" type="Area2D" parent="ConstructEditor"]
-editor/display_folded = true
 position = Vector2( 350, 350 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConstructEditor/Snapper"]
 shape = SubResource( 2 )
 
 [node name="SnapperTwean" type="Tween" parent="ConstructEditor"]
+
+[node name="PanelContainer" type="PanelContainer" parent="ConstructEditor"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -157.0
+margin_top = -39.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 9
+
+[node name="MarginContainer" type="MarginContainer" parent="ConstructEditor/PanelContainer"]
+margin_right = 190.0
+margin_bottom = 39.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConstructEditor/PanelContainer/MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 185.0
+margin_bottom = 34.0
+
+[node name="Label" type="Label" parent="ConstructEditor/PanelContainer/MarginContainer/HBoxContainer"]
+margin_top = 3.0
+margin_right = 160.0
+margin_bottom = 25.0
+text = "Resource Consumption "
+
+[node name="ConsumptionLabel" type="Label" parent="ConstructEditor/PanelContainer/MarginContainer/HBoxContainer"]
+margin_left = 164.0
+margin_top = 3.0
+margin_right = 180.0
+margin_bottom = 25.0
+text = "0"
 [connection signal="body_entered" from="ConstructEditor/Snapper" to="ConstructEditor" method="_on_Snapper_body_entered"]
