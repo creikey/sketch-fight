@@ -17,6 +17,7 @@ func _process(delta):
 func update_my_info():
 	Lobby.my_info["user_name"] = $PanelContainer/VBoxContainer/HBoxContainer2/Username.text
 	Lobby.my_info["color"] = $PanelContainer/VBoxContainer/HBoxContainer2/Panel/ColorsHBoxContainer.color
+	Lobby.my_info["team"] = Lobby.my_info["user_name"]
 
 func goto_main_menu():
 	$PanelContainer/VBoxContainer/HBoxContainer2.visible = false

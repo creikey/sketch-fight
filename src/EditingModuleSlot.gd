@@ -14,7 +14,7 @@ func _gui_input(event):
 #		get_node("/root/World/UI").add_child(cur_pie_menu)
 		add_child(cur_pie_menu)
 		cur_pie_menu.delete_on_hide = true
-		cur_pie_menu.rect_global_position = rect_global_position + rect_size/2
+		cur_pie_menu.rect_global_position = rect_global_position + Vector2(-cur_pie_menu.rect_size.x, cur_pie_menu.rect_size.y)/2
 		add_module_option("weapon_laser", cur_pie_menu, new_module_button_pack)
 		
 		cur_pie_menu.show()

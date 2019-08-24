@@ -21,6 +21,7 @@ var cur_control: Control = null
 var hiding = false
 
 func _ready():
+	set_as_toplevel(true)
 	if not Engine.editor_hint:
 		set_process(false)
 		visible = false

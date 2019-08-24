@@ -20,6 +20,7 @@ onready var typical_angular_drag = angular_damp
 
 var network_master = false
 var ship_type = "FighterShip"
+var team = ""
 
 func _ready():
 #	update_ship()
@@ -43,7 +44,7 @@ func _integrate_forces(state: Physics2DDirectBodyState):
 		state.linear_velocity = target_linear_velocity
 		state.angular_velocity = target_angular_velocity
 #	applied_force = Vector2(horizontal * move_force, vertical * move_force)
-	applied_force = Vector2(0, vertical * move_force).rotated(state.transform.get_rotation())
+	applied_force = Vector2(-vertical * move_force, 0).rotated(state.transform.get_rotation())
 	if horizontal == 0:
 		angular_damp = typical_angular_drag
 	else:
@@ -62,7 +63,9 @@ func _input(event):
 func update_ship():
 	if has_node(ship_type):
 		get_node(ship_type).queue_free()
-	add_child(load(EditingShip.ships_path + ship_type + ".tscn").instance())
+	var cur_ship = load(EditingShip.ships_path + ship_type + ".tscn").instance()
+	add_child(cur_ship)
+	cur_ship.set_network_master(get_network_master())
 
 func setup_from_args(args: Array):
 	global_position = args[0]
@@ -71,6 +74,7 @@ func setup_from_args(args: Array):
 	update_ship()
 	get_node(ship_type).get_node("Sprite").modulate = args[2]
 	get_node(ship_type).setup_from_one_arg(args[3])
+	team = args[4]
 
 func hit(damage: float):
 	print("Damage ", damage)

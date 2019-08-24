@@ -7,6 +7,16 @@ export (PackedScene) var module_slot_pack
 
 var modules_are_editing = false
 
+func _unhandled_input(event):
+	if event.is_action_pressed("g_fire") and is_network_master() and modules_are_editing == false:
+		my_fire_modules()
+		rpc("my_fire_modules")
+
+remote func my_fire_modules():
+	for m in get_modules():
+		for c in m.get_children():
+			c.my_fire(get_parent().global_transform.get_rotation(), get_parent().global_transform.origin, get_parent().team, get_parent())
+
 func get_modules() -> Array:
 	return $Modules.get_children()
 

@@ -19,5 +19,7 @@ static func get_module(module_name: String) -> Array:
 
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
-func my_fire(ship_rotation: float, ship_position: Vector2) -> void:
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
+func my_fire(ship_rotation: float, ship_position: Vector2, team: String, ship: PhysicsBody2D) -> void:
 	AbstractMethods.unimplemented("fire", "Module")

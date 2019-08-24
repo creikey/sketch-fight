@@ -63,8 +63,6 @@ margin_bottom = 7.0
 script = ExtResource( 1 )
 player_and_score_pack = ExtResource( 2 )
 
-[node name="Lasers" type="Node2D" parent="."]
-
 [node name="Players" type="Node2D" parent="."]
 
 [node name="Environment" type="Node2D" parent="."]
@@ -104,6 +102,8 @@ region_rect = Rect2( 0, 0, 15360, 8640 )
 [node name="Ships" type="Node2D" parent="."]
 
 [node name="ResourceFarmers" type="Node2D" parent="."]
+
+[node name="Lasers" type="Node2D" parent="."]
 
 [node name="ConstructEditor" type="ColorRect" parent="."]
 margin_left = -350.0

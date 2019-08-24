@@ -80,12 +80,16 @@ func _player_connected(id):
 	rpc_id(id, "register_player", my_id, my_info)
 	emit_signal("update_lobby", player_info, my_info)
 
+func ensure_no_node(node_parent: NodePath, node_name: NodePath):
+	if get_node(node_parent).has_node(node_name):
+		get_node(node_parent).get_node(node_name).queue_free()
+
 func _player_disconnected(id):
 	player_info.erase(id) # Erase player from info.
 	player_resources.erase(id)
 	if get_node("/root").has_node("World"):
-		get_node("/root/World/Ships/" + str(id)).queue_free()
-		get_node("/root/World/ResourceFarmers/" + str(id)).queue_free()
+		ensure_no_node("/root/World/Ships", str(id))
+		ensure_no_node("/root/World/ResourceFarmers", str(id))
 	emit_signal("update_resources")
 	emit_signal("update_lobby", player_info, my_info)
 
