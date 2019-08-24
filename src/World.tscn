@@ -17,7 +17,7 @@
 resource_name = "error"
 length = 0.4
 tracks/0/type = "value"
-tracks/0/path = NodePath("BackgroundEditingPad:color")
+tracks/0/path = NodePath("../ConstructEditor:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -105,7 +105,12 @@ region_rect = Rect2( 0, 0, 15360, 8640 )
 
 [node name="ResourceFarmers" type="Node2D" parent="."]
 
-[node name="ConstructEditor" type="Node2D" parent="."]
+[node name="ConstructEditor" type="ColorRect" parent="."]
+margin_left = -350.0
+margin_top = -350.0
+margin_right = 350.0
+margin_bottom = 350.0
+color = Color( 0, 0, 0, 0.0588235 )
 script = ExtResource( 7 )
 ship_pack = ExtResource( 8 )
 resource_farmer_pack = ExtResource( 9 )
@@ -114,12 +119,15 @@ editing_resource_farmer_pack = ExtResource( 9 )
 
 [node name="ConveyorBelt" type="Sprite" parent="ConstructEditor"]
 modulate = Color( 0, 0, 0, 0.133333 )
+position = Vector2( 50, 50 )
 texture = ExtResource( 11 )
+centered = false
 region_enabled = true
 region_rect = Rect2( 0, 0, 600, 600 )
 script = ExtResource( 12 )
 
 [node name="BackgroundEditingPad" type="ColorRect" parent="ConstructEditor"]
+visible = false
 anchor_right = 1.0
 margin_left = -350.0
 margin_top = -350.0
@@ -133,6 +141,7 @@ anims/error = SubResource( 1 )
 
 [node name="Snapper" type="Area2D" parent="ConstructEditor"]
 editor/display_folded = true
+position = Vector2( 350, 350 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConstructEditor/Snapper"]
 shape = SubResource( 2 )
