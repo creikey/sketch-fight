@@ -57,7 +57,7 @@ func _input(event):
 		$Snapper/CollisionShape2D.disabled = true
 		match construct_type:
 			CONSTRUCT_TYPE.ship:
-				Lobby.transmit_object("Ship", ship_pack.resource_path, [cur_construct.global_position, "FighterShip", Lobby.my_info["color"]])
+				Lobby.transmit_object("Ship", ship_pack.resource_path, [cur_construct.global_position, "FighterShip", Lobby.my_info["color"], cur_construct.get_module_arg()])
 			CONSTRUCT_TYPE.resource_block:
 				if not cur_construct.can_place():
 					show_place_error()

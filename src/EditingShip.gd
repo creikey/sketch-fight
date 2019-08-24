@@ -13,3 +13,6 @@ func update_ship():
 	var cur_ship: ShipModules = load(ships_path + ship_type + ".tscn").instance()
 	add_child(cur_ship)
 	cur_ship.to_editing_mode()
+
+func get_module_arg() -> Dictionary:
+	return get_node(ship_type).get_arg()

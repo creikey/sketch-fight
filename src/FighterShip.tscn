@@ -17,13 +17,21 @@ texture = ExtResource( 4 )
 [node name="Modules" type="Node2D" parent="."]
 
 [node name="ModuleSlot1" parent="Modules" instance=ExtResource( 3 )]
-position = Vector2( 0, -30 )
+margin_left = 47.0
+margin_top = 12.0
+margin_right = 79.0
+margin_bottom = 44.0
 
 [node name="ModuleSlot2" parent="Modules" instance=ExtResource( 3 )]
-position = Vector2( 0, 30 )
+margin_left = -79.0
+margin_top = 12.0
+margin_right = -47.0
+margin_bottom = 44.0
 
 [node name="ModuleSlot3" parent="Modules" instance=ExtResource( 3 )]
-position = Vector2( 63.226, 28.245 )
+margin_top = 20.0
+margin_bottom = 52.0
 
 [node name="ModuleSlot4" parent="Modules" instance=ExtResource( 3 )]
-position = Vector2( -63.2264, 28.2451 )
+margin_top = -50.0
+margin_bottom = -18.0

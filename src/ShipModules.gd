@@ -35,9 +35,20 @@ static func copy_property(node_source: Node, node_output: Node, property_name: S
 
 func copy_properties(module_source: ModuleSlot, module_output: ModuleSlot):
 	var identical_properties = [
-		"position",
+		"rect_position",
 		"module_type",
 		"name"
 	]
 	for p in identical_properties:
 		copy_property(module_source, module_output, p)
+	module_output.set_module_type(module_source.module_type)
+
+func get_arg() -> Dictionary:
+	var output = {}
+	for m in get_modules():
+		output[m.name] = m.module_type
+	return output
+
+func setup_from_one_arg(in_arg: Dictionary):
+	for m in in_arg.keys():
+		$Modules.get_node(m).set_module_type(in_arg[m])
