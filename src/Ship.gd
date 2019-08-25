@@ -4,7 +4,7 @@ extends Construct
 class_name Ship
 
 export var move_force = 10000
-export var turn_force = 100000.0
+export var turn_force = 50000.0
 
 remote var target_transform: Transform2D = Transform2D()
 remote var target_linear_velocity: Vector2 = Vector2()
@@ -50,6 +50,7 @@ func _integrate_forces(state: Physics2DDirectBodyState):
 	else:
 		self.angular_damp = -1
 	self.applied_torque = horizontal * turn_force
+#	print(self.applied_torque)
 #	if Input.is_action_just_pressed("g_reset"):
 #		state.transform.origin = start_position
 
@@ -67,6 +68,7 @@ func update_ship():
 	add_child(cur_ship)
 	cur_ship.set_network_master(get_network_master())
 	cur_ship.get_node("LifeBar").life = 100.0
+	cur_ship.to_battle_mode()
 
 func setup_from_args(args: Array):
 	global_position = args[0]

@@ -1,4 +1,4 @@
-extends CollisionPolygon2D
+extends Node2D
 
 class_name ShipModules
 
@@ -23,7 +23,7 @@ func get_module_slots() -> Array:
 	return $Modules.get_children()
 
 func to_editing_mode():
-	disabled = true
+	$CollisionShape2D.disabled = true
 	if modules_are_editing:
 		return
 	modules_are_editing = true
@@ -44,7 +44,9 @@ func _module_changed(_new_module_type):
 	emit_signal("modules_changed", cur_resource_count)
 
 func to_battle_mode():
-	disabled = false
+	var shape_owner = get_parent().create_shape_owner(get_parent())
+	get_parent().shape_owner_add_shape(shape_owner, $CollisionShape2D.shape)
+	$CollisionShape2D.disabled = false
 	if modules_are_editing == false:
 		return
 	modules_are_editing = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://ShipModules.gd" type="Script" id=1]
 [ext_resource path="res://EditingModuleSlot.tscn" type="PackedScene" id=2]
@@ -7,12 +7,12 @@
 [ext_resource path="res://ModuleSlot.tscn" type="PackedScene" id=5]
 [ext_resource path="res://LifeBar.tscn" type="PackedScene" id=6]
 
-[node name="FighterShip" type="CollisionPolygon2D"]
-polygon = PoolVector2Array( -9, -81.2, 20, -65.2, 20, -60.9, -10.5, -43, -14, -43, -14, -32, 77, -32, 77, -27.1, 57, -8.2, 57, 7.10001, 77.4, 28.6, 76.3, 31, -14, 31, -14, 42, -11.5, 42, 20, 59.8, 20, 64.1, -9.4, 82, -12, 82, -46, 83, -46, 81.3, -77, 64.2, -77, 60.9, -45.6, 42, -32, 42, -32, 31, -65, 31, -65, -30.9, -32, -31.9, -32, -43, -47, -43, -47, -44.8, -77, -60.8, -77, -65.2, -47, -81.2, -47, -83, -9, -83 )
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 30.0
+height = 100.0
+
+[node name="FighterShip" type="Node2D"]
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_vertical_guides_": [  ]
-}
 editing_module_slot_pack = ExtResource( 2 )
 module_slot_pack = ExtResource( 3 )
 
@@ -51,3 +51,7 @@ margin_bottom = 34.0
 
 [node name="Position2D" type="Position2D" parent="LifeBar"]
 position = Vector2( 0, 150 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource( 1 )
