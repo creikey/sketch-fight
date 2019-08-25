@@ -8,6 +8,9 @@ var target_id = -1
 var number_of_ships = 0 setget set_number_of_ships
 var team = ""
 
+func my_get_resource_cost():
+	return 20
+
 func setup_from_args(args: Array):
 	global_position = args[0]
 	modulate = args[1]

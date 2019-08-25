@@ -196,11 +196,12 @@ func add_categorical_node(root_node_name: String, master_id: int, object: Node):
 # must have node2d acting as a layer with same name as input node + 's'
 # object must have a function called 'setup_from_args' that takes the array and
 #	duplicates its state
-func transmit_object(object_name: String, object_pack_path: String, arguments: Array): # called when spawning new object
+func transmit_object(object_name: String, object_pack_path: String, resource_cost: float, arguments: Array): # called when spawning new object
 	var my_peer_id = get_tree().get_network_unique_id()
 	if not number_of_ships_per_id.has(my_peer_id):
 		number_of_ships_per_id[my_peer_id] = 0
 	number_of_ships_per_id[my_peer_id] += 1
+	player_resources[my_peer_id] -= resource_cost
 	
 	var my_object = load(object_pack_path).instance()
 	my_object.set_name(str(my_peer_id) + object_name + str(number_of_ships_per_id[my_peer_id]))
@@ -209,12 +210,14 @@ func transmit_object(object_name: String, object_pack_path: String, arguments: A
 	add_categorical_node(object_name, my_peer_id, my_object)
 #	get_node("/root/World/" + object_name + "s").add_child(my_object)
 	
-	rpc("receive_object", object_pack_path, arguments, my_peer_id, object_name)
+	rpc("receive_object", object_pack_path, arguments, my_peer_id, resource_cost, object_name)
 
-remote func receive_object(object_pack_path: String, arguments: Array, master_id: int, root_node_name: String): # called on everybody else to show new object
+remote func receive_object(object_pack_path: String, arguments: Array, master_id: int, resource_cost: float, root_node_name: String): # called on everybody else to show new object
 	if not number_of_ships_per_id.has(master_id):
 		number_of_ships_per_id[master_id] = 0
 	number_of_ships_per_id[master_id] += 1
+	
+	player_resources[master_id] -= resource_cost
 	
 	var cur_object = load(object_pack_path).instance()
 	

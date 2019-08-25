@@ -18,7 +18,7 @@ var resource_consumption = 0 setget set_resource_consumption
 func _ready():
 	visible = false
 
-func enough_resources():
+func not_enough_resources():
 	return resource_consumption >= Lobby.player_resources[get_tree().get_network_unique_id()]
 
 func _input(event):
@@ -40,16 +40,19 @@ func _input(event):
 	elif event.is_action_pressed("g_enter_ship") and editing:
 		if not cur_construct:
 			return
+		if not_enough_resources():
+			show_place_error()
+			return
 		# placing construct in world
 		$Snapper/CollisionShape2D.disabled = true
 		match construct_type:
 			CONSTRUCT_TYPE.ship:
-				Lobby.transmit_object("Ship", ship_pack.resource_path, [cur_construct.global_position, "FighterShip", Lobby.my_info["color"], cur_construct.get_module_arg(), Lobby.my_info["team"]])
+				Lobby.transmit_object("Ship", ship_pack.resource_path, resource_consumption, [cur_construct.global_position, "FighterShip", Lobby.my_info["color"], cur_construct.get_module_arg(), Lobby.my_info["team"]])
 			CONSTRUCT_TYPE.resource_block:
 				if not cur_construct.can_place():
 					show_place_error()
 					return
-				Lobby.transmit_object("ResourceFarmer", resource_farmer_pack.resource_path, [cur_construct.global_position, Lobby.my_info["color"], get_tree().get_network_unique_id(), Lobby.my_info["team"]])
+				Lobby.transmit_object("ResourceFarmer", resource_farmer_pack.resource_path, resource_consumption, [cur_construct.global_position, Lobby.my_info["color"], get_tree().get_network_unique_id(), Lobby.my_info["team"]])
 			_:
 				printerr("Cannot transmit object: ", construct_type)
 				show_place_error()
@@ -107,7 +110,7 @@ func _on_Snapper_body_entered(body):
 func set_resource_consumption(new_resource_consumption):
 	resource_consumption = new_resource_consumption
 	$PanelContainer/MarginContainer/HBoxContainer/ConsumptionLabel.text = str(new_resource_consumption)
-	if enough_resources():
+	if not_enough_resources():
 		$PanelContainer/MarginContainer/HBoxContainer/ConsumptionLabel.modulate = Color(1, 0, 0)
 	else:
 		$PanelContainer/MarginContainer/HBoxContainer/ConsumptionLabel.modulate = Color(1, 1, 1)
