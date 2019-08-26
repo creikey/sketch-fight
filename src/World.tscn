@@ -85,13 +85,8 @@ drag_margin_top = 0.1
 drag_margin_right = 0.1
 drag_margin_bottom = 0.1
 
-[node name="SelectionArea" type="Area2D" parent="CameraTarget"]
-
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="CameraTarget/SelectionArea"]
-polygon = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0 )
-disabled = true
-
 [node name="SelectionColorRect" type="ColorRect" parent="CameraTarget"]
+visible = false
 margin_right = 812.0
 margin_bottom = 583.0
 rect_scale = Vector2( -1, 1 )
