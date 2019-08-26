@@ -20,12 +20,6 @@ func _process(delta):
 		var selection_points: Array = []
 		var rect_size = get_global_mouse_position() - selecting_origin_point
 		
-#		selection_points.append(Vector2())
-#		selection_points.append(Vector2(rect_size.x, 0))
-#		selection_points.append(rect_size)
-#		selection_points.append(Vector2(0, rect_size.y))
-#		$SelectionArea/CollisionShape2D.polygon = PoolVector2Array(selection_points)
-		
 		# move color rect to position
 		$SelectionColorRect.rect_global_position = selecting_origin_point
 		
@@ -60,8 +54,6 @@ func set_selecting(new_selecting):
 		if target_nodes.size() != 0:
 			for s in target_nodes:
 				s.selected = false
-#		$SelectionArea.global_position = selecting_origin_point
-#		$SelectionArea/CollisionShape2D.disabled = false
 		$SelectionColorRect.visible = true
 	elif selecting and not new_selecting: # stop selecting
 		target_nodes = []
@@ -69,6 +61,5 @@ func set_selecting(new_selecting):
 			if selection_rect.has_point(s.global_position):
 				target_nodes.append(s)
 				s.selected = true
-#		$SelectionArea/CollisionShape2D.disabled = true
 		$SelectionColorRect.visible = false
 	selecting = new_selecting
