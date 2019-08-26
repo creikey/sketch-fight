@@ -37,6 +37,7 @@ func _input(event):
 		if visible:
 			close_editor()
 			return
+		self.resource_consumption = 0.0
 		$Snapper/CollisionShape2D.disabled = true
 		$SnapperTwean.stop_all()
 		visible = true

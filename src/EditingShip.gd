@@ -16,6 +16,7 @@ func update_ship():
 	print(ship_data[ship_type][0])
 	var cur_ship: ShipModules = load(ship_data[ship_type][0]).instance()
 	add_child(cur_ship)
+	cur_ship.get_node("SelectedRing").visible = false
 # warning-ignore:return_value_discarded
 	cur_ship.connect("modules_changed", self, "_ship_modules_changed")
 	cur_ship.to_editing_mode()

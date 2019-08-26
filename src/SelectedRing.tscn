@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://SelectedRing.gd" type="Script" id=1]
+
+[node name="SelectedRing" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+size = 200.0
+color = Color( 0.901961, 0.901961, 0.901961, 1 )
+width = 20.0

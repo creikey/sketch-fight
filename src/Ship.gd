@@ -22,6 +22,8 @@ var network_master = false
 var ship_type = "FighterShip"
 var team = ""
 
+var selected = false setget set_selected
+
 func _ready():
 #	update_ship()
 	if is_network_master():
@@ -55,7 +57,7 @@ func _integrate_forces(state: Physics2DDirectBodyState):
 #		state.transform.origin = start_position
 
 func _input(event):
-	if network_master:
+	if network_master and selected:
 		if event.is_action("g_right") or event.is_action("g_left"):
 			rset("horizontal", int(Input.is_action_pressed("g_right")) - int(Input.is_action_pressed("g_left")))
 		elif event.is_action("g_up") or event.is_action("g_down"):
@@ -66,6 +68,7 @@ func update_ship():
 		get_node(ship_type).queue_free()
 	var cur_ship = load(EditingShip.ships_path + ship_type + ".tscn").instance()
 	add_child(cur_ship)
+	self.selected = false
 	cur_ship.set_network_master(get_network_master())
 	cur_ship.get_node("LifeBar").life = 100.0
 	cur_ship.to_battle_mode()
@@ -85,3 +88,8 @@ func dead():
 func hit(damage: float):
 	if has_node(ship_type):
 		get_node(ship_type).get_node("LifeBar").change_health(-damage)
+
+func set_selected(new_selected):
+	selected = new_selected
+	if has_node(ship_type):
+		get_node(ship_type).get_node("SelectedRing").visible = selected
