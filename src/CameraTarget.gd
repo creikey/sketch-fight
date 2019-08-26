@@ -10,8 +10,14 @@ var target_nodes: Array = []
 var selection_rect: Rect2 = Rect2()
 
 func _process(delta):
-	if Input.is_action_pressed("g_pan"):
+	if Input.is_action_pressed("g_pan") and target_nodes.size() == 0:
 		global_position = get_global_mouse_position()
+	if target_nodes.size() != 0:
+		var average_position = Vector2()
+		for t in target_nodes:
+			average_position += t.global_position
+		average_position = average_position/target_nodes.size()
+		global_position = average_position
 	var c = smoothing * delta
 	var output_zoom = ((target_zoom - $Camera2D.zoom.x) * c) + $Camera2D.zoom.x
 	$Camera2D.zoom.x = output_zoom
