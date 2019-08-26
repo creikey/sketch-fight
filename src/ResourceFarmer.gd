@@ -1,6 +1,7 @@
 extends Construct
 
 const fading_amount = 0.4
+const resource_rate = 4
 
 var editing = false
 var target_id = -1
@@ -19,7 +20,7 @@ func setup_from_args(args: Array):
 
 func _on_GenerationTimer_timeout():
 	if target_id > 0 and not editing:
-		Lobby.player_resources[target_id] += 1
+		Lobby.player_resources[target_id] += resource_rate
 
 func _on_ResourceFarmer_body_entered(body):
 	if body.is_in_group("ships") and not editing:

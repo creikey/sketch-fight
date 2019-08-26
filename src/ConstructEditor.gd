@@ -17,18 +17,25 @@ var resource_consumption = 0 setget set_resource_consumption
 
 func _ready():
 	visible = false
+	Lobby.connect("update_resources", self, "_on_Lobby_update_resources")
 
 func not_enough_resources():
 	return resource_consumption >= Lobby.player_resources[get_tree().get_network_unique_id()]
 
+func close_editor():
+	visible = false
+	editing = false
+	if cur_construct:
+		cur_construct.queue_free()
+		cur_construct = null
+
 func _input(event):
-	if event.is_action_pressed("g_open_editor"):
+	if event.is_action_pressed("g_close_editor"):
 		if visible:
-			visible = false
-			editing = false
-			if cur_construct:
-				cur_construct.queue_free()
-				cur_construct = null
+			close_editor()
+	elif event.is_action_pressed("g_open_editor"):
+		if visible:
+			close_editor()
 			return
 		$Snapper/CollisionShape2D.disabled = true
 		$SnapperTwean.stop_all()
@@ -37,30 +44,6 @@ func _input(event):
 		construct_type = CONSTRUCT_TYPE.ship
 		rect_global_position = get_global_mouse_position() - rect_size/2
 		$Snapper/CollisionShape2D.disabled = false
-	elif event.is_action_pressed("g_enter_ship") and editing:
-		if not cur_construct:
-			return
-		if not_enough_resources():
-			show_place_error()
-			return
-		# placing construct in world
-		$Snapper/CollisionShape2D.disabled = true
-		match construct_type:
-			CONSTRUCT_TYPE.ship:
-				Lobby.transmit_object("Ship", ship_pack.resource_path, resource_consumption, [cur_construct.global_position, "FighterShip", Lobby.my_info["color"], cur_construct.get_module_arg(), Lobby.my_info["team"]])
-			CONSTRUCT_TYPE.resource_block:
-				if not cur_construct.can_place():
-					show_place_error()
-					return
-				Lobby.transmit_object("ResourceFarmer", resource_farmer_pack.resource_path, resource_consumption, [cur_construct.global_position, Lobby.my_info["color"], get_tree().get_network_unique_id(), Lobby.my_info["team"]])
-			_:
-				printerr("Cannot transmit object: ", construct_type)
-				show_place_error()
-				return
-		cur_construct.queue_free()
-		cur_construct = null
-		visible = false
-		editing = false
 
 func _gui_input(event):
 	if event.is_action_pressed("g_new_ship") and editing:
@@ -110,7 +93,39 @@ func _on_Snapper_body_entered(body):
 func set_resource_consumption(new_resource_consumption):
 	resource_consumption = new_resource_consumption
 	$PanelContainer/MarginContainer/HBoxContainer/ConsumptionLabel.text = str(new_resource_consumption)
+
+func update_resource_gui():
 	if not_enough_resources():
 		$PanelContainer/MarginContainer/HBoxContainer/ConsumptionLabel.modulate = Color(1, 0, 0)
 	else:
 		$PanelContainer/MarginContainer/HBoxContainer/ConsumptionLabel.modulate = Color(1, 1, 1)
+
+func _on_Lobby_update_resources():
+	update_resource_gui()
+
+func _on_PlaceButton_pressed():
+	if not cur_construct:
+		return
+	if not editing:
+		return
+	if not_enough_resources():
+		show_place_error()
+		return
+	# placing construct in world
+	$Snapper/CollisionShape2D.disabled = true
+	match construct_type:
+		CONSTRUCT_TYPE.ship:
+			Lobby.transmit_object("Ship", ship_pack.resource_path, resource_consumption, [cur_construct.global_position, "FighterShip", Lobby.my_info["color"], cur_construct.get_module_arg(), Lobby.my_info["team"]])
+		CONSTRUCT_TYPE.resource_block:
+			if not cur_construct.can_place():
+				show_place_error()
+				return
+			Lobby.transmit_object("ResourceFarmer", resource_farmer_pack.resource_path, resource_consumption, [cur_construct.global_position, Lobby.my_info["color"], get_tree().get_network_unique_id(), Lobby.my_info["team"]])
+		_:
+			printerr("Cannot transmit object: ", construct_type)
+			show_place_error()
+			return
+	cur_construct.queue_free()
+	cur_construct = null
+	visible = false
+	editing = false
