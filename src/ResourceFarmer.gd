@@ -2,6 +2,7 @@ extends Construct
 
 const fading_amount = 0.4
 const resource_rate = 4
+const game_state = preload("res://game_state.tres")
 
 var editing = false
 var target_id = -1
@@ -17,6 +18,7 @@ func setup_from_args(args: Array):
 	modulate = args[1]
 	target_id = args[2]
 	team = args[3]
+	game_state.new_resource_farmer_made(target_id)
 
 func _on_GenerationTimer_timeout():
 	if target_id > 0 and not editing:
@@ -58,4 +60,5 @@ func can_place() -> bool:
 	return true
 
 func _on_LifeBar_out_of_life():
+	game_state.destroy_resource_farmer(target_id)
 	queue_free()

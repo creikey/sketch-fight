@@ -159,7 +159,11 @@ remotesync func preconfigure_game():
 #		cur_player.global_position = starting_positions[p]
 #		get_node("/root/World/Players").add_child(cur_player)
 #		cur_start_position.x += 100
-	
+
+	var every_player_id = player_info.keys()
+	every_player_id.append(my_peer_id)
+	preload("res://game_state.tres").init_resource_farmers(every_player_id)
+
 	player_resources[my_peer_id] = starting_resources
 	for p in player_info.keys():
 		player_resources[p] = starting_resources
