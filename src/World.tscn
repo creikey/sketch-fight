@@ -1,49 +1,13 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://PlayerResources.gd" type="Script" id=2]
 [ext_resource path="res://PlayerAndScore.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Environment.gd" type="Script" id=4]
 [ext_resource path="res://ResourceBlock.tscn" type="PackedScene" id=5]
-[ext_resource path="res://CameraTarget.gd" type="Script" id=6]
-[ext_resource path="res://points-1.png" type="Texture" id=7]
-[ext_resource path="res://ConstructEditor.gd" type="Script" id=8]
-[ext_resource path="res://Ship.tscn" type="PackedScene" id=9]
-[ext_resource path="res://ResourceFarmer.tscn" type="PackedScene" id=10]
-[ext_resource path="res://EditingShip.tscn" type="PackedScene" id=11]
-[ext_resource path="res://editing-line.svg" type="Texture" id=12]
-[ext_resource path="res://ConveyorBelt.gd" type="Script" id=13]
-
-[sub_resource type="Animation" id=1]
-resource_name = "error"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/path = NodePath("../ConstructEditor:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.4 ),
-"transitions": PoolRealArray( 0.233258, 2.07053, 1 ),
-"update": 0,
-"values": [ Color( 0, 0, 0, 0.0588235 ), Color( 1, 0, 0, 0.278431 ), Color( 0, 0, 0, 0.0588235 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("ConveyorBelt:direction")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.4 ),
-"transitions": PoolRealArray( 0.25, 0.203063, 1 ),
-"update": 0,
-"values": [ 1.0, -1.0, 1.0 ]
-}
-
-[sub_resource type="CircleShape2D" id=2]
-radius = 423.414
+[ext_resource path="res://CameraTarget.tscn" type="PackedScene" id=6]
+[ext_resource path="res://SpaceBackground.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ConstructEditor.tscn" type="PackedScene" id=8]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -71,40 +35,9 @@ resource_block_pack = ExtResource( 5 )
 
 [node name="ResourceBlocks" type="Node2D" parent="Environment"]
 
-[node name="CameraTarget" type="Node2D" parent="."]
-script = ExtResource( 6 )
+[node name="CameraTarget" parent="." instance=ExtResource( 6 )]
 
-[node name="Camera2D" type="Camera2D" parent="CameraTarget"]
-current = true
-limit_left = 0
-limit_top = 0
-limit_right = 10000
-limit_bottom = 10000
-limit_smoothed = true
-smoothing_enabled = true
-drag_margin_left = 0.1
-drag_margin_top = 0.1
-drag_margin_right = 0.1
-drag_margin_bottom = 0.1
-
-[node name="SelectionColorRect" type="ColorRect" parent="CameraTarget"]
-visible = false
-margin_right = 812.0
-margin_bottom = 583.0
-rect_scale = Vector2( -1, 1 )
-color = Color( 0.686275, 0.686275, 0.686275, 0.219608 )
-
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-editor/display_folded = true
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2( 15360, 8640 )
-
-[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
-modulate = Color( 0, 0, 0, 0.25098 )
-texture = ExtResource( 7 )
-region_enabled = true
-region_rect = Rect2( 0, 0, 15360, 8640 )
+[node name="SpaceBackground" parent="." instance=ExtResource( 7 )]
 
 [node name="Ships" type="Node2D" parent="."]
 
@@ -112,82 +45,4 @@ region_rect = Rect2( 0, 0, 15360, 8640 )
 
 [node name="Lasers" type="Node2D" parent="."]
 
-[node name="ConstructEditor" type="ColorRect" parent="."]
-editor/display_folded = true
-margin_left = -350.0
-margin_top = -350.0
-margin_right = 350.0
-margin_bottom = 350.0
-color = Color( 0, 0, 0, 0.0588235 )
-script = ExtResource( 8 )
-ship_pack = ExtResource( 9 )
-resource_farmer_pack = ExtResource( 10 )
-editing_ship_pack = ExtResource( 11 )
-editing_resource_farmer_pack = ExtResource( 10 )
-
-[node name="ConveyorBelt" type="Sprite" parent="ConstructEditor"]
-modulate = Color( 0, 0, 0, 0.133333 )
-position = Vector2( 50, 50 )
-texture = ExtResource( 12 )
-centered = false
-region_enabled = true
-region_rect = Rect2( 0, 0, 600, 600 )
-script = ExtResource( 13 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="ConstructEditor"]
-anims/error = SubResource( 1 )
-
-[node name="Snapper" type="Area2D" parent="ConstructEditor"]
-position = Vector2( 350, 350 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ConstructEditor/Snapper"]
-shape = SubResource( 2 )
-
-[node name="SnapperTwean" type="Tween" parent="ConstructEditor"]
-
-[node name="PanelContainer" type="PanelContainer" parent="ConstructEditor"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -157.0
-margin_top = -39.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_vertical = 9
-
-[node name="MarginContainer" type="MarginContainer" parent="ConstructEditor/PanelContainer"]
-margin_right = 190.0
-margin_bottom = 39.0
-custom_constants/margin_right = 5
-custom_constants/margin_top = 5
-custom_constants/margin_left = 5
-custom_constants/margin_bottom = 5
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ConstructEditor/PanelContainer/MarginContainer"]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 185.0
-margin_bottom = 34.0
-
-[node name="Label" type="Label" parent="ConstructEditor/PanelContainer/MarginContainer/HBoxContainer"]
-margin_top = 3.0
-margin_right = 160.0
-margin_bottom = 25.0
-text = "Resource Consumption "
-
-[node name="ConsumptionLabel" type="Label" parent="ConstructEditor/PanelContainer/MarginContainer/HBoxContainer"]
-margin_left = 164.0
-margin_top = 3.0
-margin_right = 180.0
-margin_bottom = 25.0
-text = "0"
-
-[node name="PlaceButton" type="Button" parent="ConstructEditor"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -40.0
-margin_right = 105.0
-text = "Place Ship"
-[connection signal="body_entered" from="ConstructEditor/Snapper" to="ConstructEditor" method="_on_Snapper_body_entered"]
-[connection signal="pressed" from="ConstructEditor/PlaceButton" to="ConstructEditor" method="_on_PlaceButton_pressed"]
+[node name="ConstructEditor" parent="." instance=ExtResource( 8 )]

@@ -1,0 +1,118 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://ConstructEditor.gd" type="Script" id=1]
+[ext_resource path="res://Ship.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ResourceFarmer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://EditingShip.tscn" type="PackedScene" id=4]
+[ext_resource path="res://editing-line.svg" type="Texture" id=5]
+[ext_resource path="res://ConveyorBelt.gd" type="Script" id=6]
+
+[sub_resource type="Animation" id=1]
+resource_name = "error"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("../ConstructEditor:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4 ),
+"transitions": PoolRealArray( 0.233258, 2.07053, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0.0588235 ), Color( 1, 0, 0, 0.278431 ), Color( 0, 0, 0, 0.0588235 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ConveyorBelt:direction")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4 ),
+"transitions": PoolRealArray( 0.25, 0.203063, 1 ),
+"update": 0,
+"values": [ 1.0, -1.0, 1.0 ]
+}
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 423.414
+
+[node name="ConstructEditor" type="ColorRect"]
+margin_left = -350.0
+margin_top = -350.0
+margin_right = 350.0
+margin_bottom = 350.0
+color = Color( 0, 0, 0, 0.0588235 )
+script = ExtResource( 1 )
+ship_pack = ExtResource( 2 )
+resource_farmer_pack = ExtResource( 3 )
+editing_ship_pack = ExtResource( 4 )
+editing_resource_farmer_pack = ExtResource( 3 )
+
+[node name="ConveyorBelt" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0.133333 )
+position = Vector2( 50, 50 )
+texture = ExtResource( 5 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 600, 600 )
+script = ExtResource( 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/error = SubResource( 1 )
+
+[node name="Snapper" type="Area2D" parent="."]
+position = Vector2( 350, 350 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Snapper"]
+shape = SubResource( 2 )
+
+[node name="SnapperTwean" type="Tween" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -157.0
+margin_top = -39.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 9
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+margin_right = 190.0
+margin_bottom = 39.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 185.0
+margin_bottom = 34.0
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer"]
+margin_top = 3.0
+margin_right = 160.0
+margin_bottom = 25.0
+text = "Resource Consumption "
+
+[node name="ConsumptionLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer"]
+margin_left = 164.0
+margin_top = 3.0
+margin_right = 180.0
+margin_bottom = 25.0
+text = "0"
+
+[node name="PlaceButton" type="Button" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -40.0
+margin_right = 105.0
+text = "Place Ship"
+[connection signal="body_entered" from="Snapper" to="." method="_on_Snapper_body_entered"]
+[connection signal="pressed" from="PlaceButton" to="." method="_on_PlaceButton_pressed"]
