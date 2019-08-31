@@ -6,6 +6,8 @@ var _resource_farmers_made = {
     # player_id : [number_of_resource_farmers, made_first_resource_farmer]
 }
 
+var won_player_name = "null! error! ERROR!!!!!! THINGS FALL APART! THINGS FALL APART!"
+
 func _ready(): # testing code
     connect("farmer_destroyed", self, "_farmer_destroyed")
 

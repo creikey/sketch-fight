@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://WonLabel.gd" type="Script" id=1]
+
+[node name="PlayerWon" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/PanelContainer"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+
+[node name="WonLabel" type="Label" parent="CanvasLayer/PanelContainer/CenterContainer"]
+margin_left = 956.0
+margin_top = 529.0
+margin_right = 964.0
+margin_bottom = 551.0
+script = ExtResource( 1 )
