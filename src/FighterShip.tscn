@@ -59,4 +59,5 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="SelectedRing" parent="." instance=ExtResource( 7 )]
+resolution = 32
 size = 116.09

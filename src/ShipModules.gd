@@ -10,7 +10,7 @@ export (PackedScene) var module_slot_pack
 var modules_are_editing = false
 
 func _unhandled_input(event):
-	if event.is_action_pressed("g_fire") and is_network_master() and modules_are_editing == false:
+	if event.is_action_pressed("g_fire") and is_network_master() and modules_are_editing == false and get_parent().selected:
 		my_fire_modules()
 		rpc("my_fire_modules")
 
