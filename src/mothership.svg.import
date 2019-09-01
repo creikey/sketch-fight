@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/resource-farmer.png-31cb36b44632f8b7fb0cbfa75d06e1f1.stex"
+path="res://.import/mothership.svg-25858fbbd66a27cd93720f8e059a0b25.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resource-farmer.png"
-dest_files=[ "res://.import/resource-farmer.png-31cb36b44632f8b7fb0cbfa75d06e1f1.stex" ]
+source_file="res://mothership.svg"
+dest_files=[ "res://.import/mothership.svg-25858fbbd66a27cd93720f8e059a0b25.stex" ]
 
 [params]
 

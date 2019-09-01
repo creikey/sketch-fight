@@ -91,7 +91,6 @@ func _player_disconnected(id):
 	player_resources.erase(id)
 	if get_node("/root").has_node("World"):
 		ensure_no_node("/root/World/Ships", str(id))
-		ensure_no_node("/root/World/ResourceFarmers", str(id))
 	emit_signal("update_resources")
 	emit_signal("update_lobby", player_info, my_info)
 
@@ -162,7 +161,7 @@ remotesync func preconfigure_game():
 
 	var every_player_id = player_info.keys()
 	every_player_id.append(my_peer_id)
-	preload("res://game_state.tres").init_resource_farmers(every_player_id)
+	preload("res://game_state.tres").init_player_gamestate(every_player_id)
 
 	player_resources[my_peer_id] = starting_resources
 	for p in player_info.keys():

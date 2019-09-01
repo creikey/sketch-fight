@@ -10,8 +10,6 @@
 
 [node name="Ships" type="Node2D" parent="."]
 
-[node name="ResourceFarmers" type="Node2D" parent="."]
-
 [node name="Lasers" type="Node2D" parent="."]
 
 [node name="CameraTarget" parent="." instance=ExtResource( 1 )]

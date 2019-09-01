@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://ConstructEditor.gd" type="Script" id=1]
 [ext_resource path="res://Ship.tscn" type="PackedScene" id=2]
-[ext_resource path="res://ResourceFarmer.tscn" type="PackedScene" id=3]
-[ext_resource path="res://EditingShip.tscn" type="PackedScene" id=4]
-[ext_resource path="res://editing-line.svg" type="Texture" id=5]
-[ext_resource path="res://ConveyorBelt.gd" type="Script" id=6]
+[ext_resource path="res://EditingShip.tscn" type="PackedScene" id=3]
+[ext_resource path="res://editing-line.svg" type="Texture" id=4]
+[ext_resource path="res://ConveyorBelt.gd" type="Script" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "error"
@@ -46,18 +45,16 @@ margin_bottom = 350.0
 color = Color( 0, 0, 0, 0.0588235 )
 script = ExtResource( 1 )
 ship_pack = ExtResource( 2 )
-resource_farmer_pack = ExtResource( 3 )
-editing_ship_pack = ExtResource( 4 )
-editing_resource_farmer_pack = ExtResource( 3 )
+editing_ship_pack = ExtResource( 3 )
 
 [node name="ConveyorBelt" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0.133333 )
 position = Vector2( 50, 50 )
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 0, 0, 600, 600 )
-script = ExtResource( 6 )
+script = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/error = SubResource( 1 )

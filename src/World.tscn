@@ -41,8 +41,6 @@ resource_block_pack = ExtResource( 5 )
 
 [node name="Ships" type="Node2D" parent="."]
 
-[node name="ResourceFarmers" type="Node2D" parent="."]
-
 [node name="Lasers" type="Node2D" parent="."]
 
 [node name="ConstructEditor" parent="." instance=ExtResource( 8 )]

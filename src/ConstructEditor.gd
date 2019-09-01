@@ -2,12 +2,10 @@ extends ColorRect
 
 class_name ConstructEditor
 
-enum CONSTRUCT_TYPE { ship, resource_block }
+enum CONSTRUCT_TYPE { ship }
 
 export (PackedScene) var ship_pack
-export (PackedScene) var resource_farmer_pack
 export (PackedScene) var editing_ship_pack
-export (PackedScene) var editing_resource_farmer_pack
 
 var editing = false
 var cur_construct: Construct = null
@@ -56,8 +54,6 @@ func _gui_input(event):
 		match construct_type:
 			CONSTRUCT_TYPE.ship:
 				cur_construct = editing_ship_pack.instance()
-			CONSTRUCT_TYPE.resource_block:
-				cur_construct = editing_resource_farmer_pack.instance()
 			_:
 				printerr("Unknown construct type to place: ", construct_type)
 				show_build_error()
@@ -117,11 +113,6 @@ func _on_PlaceButton_pressed():
 	match construct_type:
 		CONSTRUCT_TYPE.ship:
 			Lobby.transmit_object("Ship", ship_pack.resource_path, resource_consumption, [cur_construct.global_position, "FighterShip", Lobby.my_info["color"], cur_construct.get_module_arg(), Lobby.my_info["team"]])
-		CONSTRUCT_TYPE.resource_block:
-			if not cur_construct.can_place():
-				show_place_error()
-				return
-			Lobby.transmit_object("ResourceFarmer", resource_farmer_pack.resource_path, resource_consumption, [cur_construct.global_position, Lobby.my_info["color"], get_tree().get_network_unique_id(), Lobby.my_info["team"]])
 		_:
 			printerr("Cannot transmit object: ", construct_type)
 			show_place_error()
