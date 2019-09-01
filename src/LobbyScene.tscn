@@ -86,6 +86,7 @@ margin_bottom = 40.0
 margin_top = 72.0
 margin_right = 1820.0
 margin_bottom = 94.0
+text = "5563"
 placeholder_text = "port"
 
 [node name="JoinCode" type="LineEdit" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
