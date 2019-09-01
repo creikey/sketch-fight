@@ -1,3 +1,0 @@
-extends StaticBody2D
-
-const construct_type = ConstructEditor.CONSTRUCT_TYPE.resource_block
