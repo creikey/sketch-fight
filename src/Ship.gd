@@ -3,6 +3,8 @@ extends Construct
 
 class_name Ship
 
+enum AUTOPILOT { fly, reposition }
+
 const control_state = preload("res://control_state.tres")
 
 export var move_force: float = 10000
@@ -23,6 +25,9 @@ onready var typical_angular_drag = self.angular_damp
 var network_master = false
 var ship_type = "FighterShip"
 var team = ""
+var target_squadron_rotation: float = 0.0
+var target_position: Vector2 = Vector2()
+var autopilot_state = AUTOPILOT.fly
 
 var selected = false setget set_selected
 
@@ -47,13 +52,27 @@ func _physics_process(delta):
 	var horizontal_input = get_horizontal_input()
 	var vertical_input = get_vertical_input()
 	
-	if has_node(ship_type):
-		var collider = get_node(ship_type).get_node("LookAheadRaycast2D").get_collider()
-		if collider:
-			if get_node(ship_type).get_node("LookRightRaycast2D").is_colliding():
-				horizontal_input = -1
-			else:
-				horizontal_input = 1
+	match autopilot_state:
+		AUTOPILOT.fly:
+			if target_position.distance_to(global_position) >= 200: # repositioning mode
+				autopilot_state = AUTOPILOT.reposition
+			
+			if abs(target_squadron_rotation - rotation) > 0.2:
+				if rotation < target_squadron_rotation:
+					horizontal_input = 1
+				else:
+					horizontal_input = -1
+			
+			if has_node(ship_type):
+				var collider = get_node(ship_type).get_node("LookAheadRaycast2D").get_collider()
+				if collider:
+					if get_node(ship_type).get_node("LookRightRaycast2D").is_colliding():
+						horizontal_input = -1
+					else:
+						horizontal_input = 1
+		AUTOPILOT.reposition:
+			if target_position.distance_to(global_position) <= 150: # with squadron again
+				autopilot_state = AUTOPILOT.fly
 	
 	rset_unreliable("horizontal", horizontal_input)
 	rset_unreliable("vertical", vertical_input)

@@ -13,11 +13,21 @@ func _process(delta):
 	if Input.is_action_pressed("g_pan") and target_nodes.size() == 0:
 		global_position = get_global_mouse_position()
 	if target_nodes.size() != 0:
+		# correct camera position
 		var average_position = Vector2()
 		for t in target_nodes:
 			average_position += t.global_position
 		average_position = average_position/target_nodes.size()
 		global_position = average_position
+		
+		# rotate ships on autopilot
+		var average_rotation = 0.0
+		for s in target_nodes:
+			average_rotation += s.rotation
+		average_rotation /= target_nodes.size()
+		for s in target_nodes:
+			s.target_squadron_rotation = average_rotation
+			s.target_position = average_position
 	var c = smoothing * delta
 	var output_zoom = ((target_zoom - $Camera2D.zoom.x) * c) + $Camera2D.zoom.x
 	$Camera2D.zoom.x = output_zoom
