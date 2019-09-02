@@ -9,6 +9,10 @@ export (PackedScene) var module_slot_pack
 
 var modules_are_editing = false
 
+func _ready():
+	$LookAheadRaycast2D.add_exception(get_parent())
+	$LookRightRaycast2D.add_exception(get_parent())
+
 func _unhandled_input(event):
 	if event.is_action_pressed("g_fire") and is_network_master() and modules_are_editing == false and get_parent().selected:
 		my_fire_modules()

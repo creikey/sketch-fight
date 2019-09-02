@@ -64,3 +64,11 @@ margin_top = -126.09
 margin_right = 126.09
 margin_bottom = 126.09
 size = 116.09
+
+[node name="LookAheadRaycast2D" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 350, 0 )
+
+[node name="LookRightRaycast2D" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 350, 85.66 )

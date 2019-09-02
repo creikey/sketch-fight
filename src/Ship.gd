@@ -47,6 +47,14 @@ func _physics_process(delta):
 	var horizontal_input = get_horizontal_input()
 	var vertical_input = get_vertical_input()
 	
+	if has_node(ship_type):
+		var collider = get_node(ship_type).get_node("LookAheadRaycast2D").get_collider()
+		if collider:
+			if get_node(ship_type).get_node("LookRightRaycast2D").is_colliding():
+				horizontal_input = -1
+			else:
+				horizontal_input = 1
+	
 	rset_unreliable("horizontal", horizontal_input)
 	rset_unreliable("vertical", vertical_input)
 
