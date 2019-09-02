@@ -1,6 +1,5 @@
 extends Area2D
 
-export var cooldown_time = 10.0
 export var resource_yield = 10.0
 
 onready var initial_a = $Sprite.modulate.a

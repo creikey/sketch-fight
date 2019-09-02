@@ -3,7 +3,9 @@ extends Construct
 
 class_name Ship
 
-export var move_force = 10000
+const control_state = preload("res://control_state.tres")
+
+export var move_force: float = 10000
 export var turn_force = 50000.0
 
 remote var target_transform: Transform2D = Transform2D()
@@ -13,8 +15,8 @@ remote var update_properties = false
 
 #var start_position: Vector2 = Vector2()
 
-remotesync var horizontal = 0
-remotesync var vertical = 0
+remotesync var horizontal: int = 0
+remotesync var vertical: int = 0
 
 onready var typical_angular_drag = self.angular_damp
 
@@ -26,10 +28,27 @@ var selected = false setget set_selected
 
 func _ready():
 #	update_ship()
+	set_physics_process(control_state.fighter_autopilot)
+# warning-ignore:return_value_discarded
+	control_state.connect("fighter_autopilot_changed", self, "_on_fighter_autopilot_changed")
 	if is_network_master():
 		network_master = true
 	else:
 		target_transform = get_transform()
+
+func _on_fighter_autopilot_changed(new_value):
+#	print(new_value)
+	set_physics_process(new_value)
+
+# warning-ignore:unused_argument
+func _physics_process(delta):
+	if not selected and network_master:
+		return
+	var horizontal_input = get_horizontal_input()
+	var vertical_input = get_vertical_input()
+	
+	rset_unreliable("horizontal", horizontal_input)
+	rset_unreliable("vertical", vertical_input)
 
 #func _process(_delta):
 #	$NametagLabel.rect_rotation = -rotation_degrees
@@ -57,11 +76,17 @@ func _integrate_forces(state: Physics2DDirectBodyState):
 #		state.transform.origin = start_position
 
 func _input(event):
-	if network_master and selected:
+	if network_master and selected and not control_state.fighter_autopilot:
 		if event.is_action("g_right") or event.is_action("g_left"):
-			rset("horizontal", int(Input.is_action_pressed("g_right")) - int(Input.is_action_pressed("g_left")))
+			rset("horizontal", get_horizontal_input())
 		elif event.is_action("g_up") or event.is_action("g_down"):
-			rset("vertical", int(Input.is_action_pressed("g_down")) - int(Input.is_action_pressed("g_up")))
+			rset("vertical", get_vertical_input())
+
+func get_horizontal_input() -> int:
+	return int(Input.is_action_pressed("g_right")) - int(Input.is_action_pressed("g_left"))
+
+func get_vertical_input() -> int:
+	return int(Input.is_action_pressed("g_down")) - int(Input.is_action_pressed("g_up"))
 
 func update_ship():
 	if has_node(ship_type):

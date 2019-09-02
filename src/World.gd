@@ -3,6 +3,7 @@ extends Node2D
 const game_state = preload("res://game_state.tres")
 
 func _ready():
+# warning-ignore:return_value_discarded
 	game_state.connect("gamestate_update", self, "on_gamestate_update")
 
 func on_gamestate_update():
@@ -26,4 +27,5 @@ func on_gamestate_update():
 		player_name = Lobby.player_info[won_id]["user_name"]
 	print("Player ", player_name, " has won!")
 	game_state.won_player_name = player_name
+# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://PlayerWon.tscn")

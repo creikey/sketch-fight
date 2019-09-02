@@ -6,6 +6,7 @@ var _player_gamestate = {
     # player_id : [number_of_ships, made_first_ship]
 }
 
+# warning-ignore:unused_class_variable
 var won_player_name = "null! error! ERROR!!!!!! THINGS FALL APART! THINGS FALL APART!"
 
 func init_player_gamestate(player_ids: Array):
